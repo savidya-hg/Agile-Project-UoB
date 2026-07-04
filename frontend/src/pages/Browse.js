@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API from '../api/axiosConfig';
 import AIUploader from '../components/AIUploader';
 import './Browse.css';
+import { useCart } from '../context/CartContext';
 
 const Browse = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -11,6 +12,7 @@ const Browse = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [categories, setCategories] = useState([]);
+  const { addToCart } = useCart();
 
   // Fetch all products on load
   useEffect(() => {
@@ -89,11 +91,12 @@ const Browse = () => {
   };
 
   // Add to cart function (will be implemented in Sprint 3)
-  const addToCart = (product) => {
+  const handleAddToCart = (product) => {
+  addToCart(product);
     // Get existing cart from localStorage
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     const existing = cart.find(item => item._id === product._id);
-    
+
     if (existing) {
       existing.quantity += 1;
     } else {
@@ -169,8 +172,8 @@ const Browse = () => {
                 )}
                 <button 
                   className="btn-add-cart"
-                  onClick={() => addToCart(p)}
-                >
+                  onClick={() => handleAddToCart(p)}
+                  >
                   Add to Cart
                 </button>
               </div>
