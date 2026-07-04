@@ -11,3 +11,8 @@
   color: white;
 }
 .preview-img { margin-top: 0.5rem; max-width: 200px; border-radius: 8px; border: 2px solid var(--border-color); }
+.hint {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
