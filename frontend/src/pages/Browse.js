@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import API from '../api/axiosConfig';
 import AIUploader from '../components/AIUploader';
 import './Browse.css';
@@ -13,6 +14,20 @@ const Browse = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [categories, setCategories] = useState([]);
   const { addToCart } = useCart();
+  const location = useLocation();
+
+  // Scroll to AI section if URL has ?ai=true
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('ai') === 'true') {
+      const aiSection = document.querySelector('.ai-section');
+      if (aiSection) {
+        setTimeout(() => {
+          aiSection.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   // Fetch all products on load
   useEffect(() => {
@@ -20,11 +35,27 @@ const Browse = () => {
       try {
         const res = await API.get('/products');
         setAllProducts(res.data);
-        setDisplayedProducts(res.data);
         
         // Extract unique categories
         const cats = ['All', ...new Set(res.data.map(p => p.category).filter(c => c))];
         setCategories(cats);
+
+        // Check if category is specified in query parameters on mount
+        const params = new URLSearchParams(location.search);
+        const queryCat = params.get('category');
+        if (queryCat) {
+          // Find matching category case-insensitively
+          const matchingCat = cats.find(c => c.toLowerCase() === queryCat.toLowerCase());
+          if (matchingCat) {
+            setSelectedCategory(matchingCat);
+            const filtered = res.data.filter(p => p.category === matchingCat);
+            setDisplayedProducts(filtered);
+          } else {
+            setDisplayedProducts(res.data);
+          }
+        } else {
+          setDisplayedProducts(res.data);
+        }
       } catch (err) {
         console.error('Error fetching products:', err);
       } finally {
@@ -32,7 +63,7 @@ const Browse = () => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [location.search]);
 
   // Handle AI search results
   const handleAISearch = (results) => {

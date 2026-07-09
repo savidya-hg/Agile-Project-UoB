@@ -14,14 +14,11 @@ function App() {
     <CartProvider>
       <BrowserRouter>
         <Navbar />
-        <div className="container">
+        <div>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/add" element={<AdminAddProduct />} />
-            <Route path="/admin/edit/:id" element={<AdminEditProduct />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/admin/edit/:id" element={<div className="container mx-auto py-8"><AdminEditProduct /></div>} />
+            <Route path="/cart" element={<div className="container mx-auto py-8"><Cart /></div>} />
           </Routes>
         </div>
       </BrowserRouter>
