@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <Link to="/" className="navbar-brand">
           <img src="/assets/Basnayaka-logo.png" alt="BFH Logo" className="logo-img" />
-          <span className="brand-text">BFH</span>
+          <span className="brand-text">Basnayaka Furniture House</span>
         </Link>
 
         <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>

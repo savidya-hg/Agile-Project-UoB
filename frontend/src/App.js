@@ -14,16 +14,15 @@ function App() {
     <CartProvider>
       <BrowserRouter>
         <Navbar />
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/add" element={<AdminAddProduct />} />
-            <Route path="/admin/edit/:id" element={<AdminEditProduct />} />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-        </div>
+        {/* No container div here – each page controls its own layout */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/browse" element={<Browse />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/add" element={<AdminAddProduct />} />
+          <Route path="/admin/edit/:id" element={<AdminEditProduct />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
       </BrowserRouter>
     </CartProvider>
   );
