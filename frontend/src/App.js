@@ -7,6 +7,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminAddProduct from './pages/AdminAddProduct';
 import AdminEditProduct from './pages/AdminEditProduct';
 import Cart from './pages/Cart';
+import AISearch from './pages/AISearch';
+import Contact from './pages/Contact';
 import './App.css';
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/admin/add" element={<AdminAddProduct />} />
           <Route path="/admin/edit/:id" element={<AdminEditProduct />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/ai-search" element={<AISearch />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>

@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* ===== HERO ===== */}
-      <section className="hero-section" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1610701596007-11502861dcfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')" }}>
+      <section className="hero-section" style={{ backgroundImage: "url('/assets/hero-img.png')" }}>
         <div className="hero-overlay">
           <div className="hero-content">
             <h1 className="hero-title animate-fade-up">Find Furniture Smarter</h1>
@@ -161,7 +161,7 @@ const Home = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2024 Basnayaka Furniture House. All rights reserved.</p>
+          <p>© 2026 Basnayaka Furniture House. All rights reserved.</p>
         </div>
       </footer>
     </div>
