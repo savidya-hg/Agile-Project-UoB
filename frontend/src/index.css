@@ -16,17 +16,16 @@ button { cursor: pointer; font-family: inherit; }
 
 /* ----- CSS VARIABLES (theme) ----- */
 :root {
-  --primary-bg: #0f0f1a;
-  --secondary-bg: #1a1a2e;
-  --card-bg: #1e1e32;
-  --accent: #c9a84c;
-  --accent-hover: #b8942e;
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-card: #1e1e32;
+  --gold: #c9a84c;
+  --gold-hover: #b8942e;
   --text-light: #f0ece3;
   --text-muted: #a8a4b5;
-  --border-color: #2a2a44;
+  --border: #2a2a44;
   --shadow: 0 8px 24px rgba(0,0,0,0.6);
   --radius: 12px;
-  --transition: 0.3s ease;
 }
 
 /* Utility classes */
