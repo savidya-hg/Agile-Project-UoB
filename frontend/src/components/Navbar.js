@@ -50,13 +50,25 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Right: Cart and Mobile menu toggle */}
-        <div className="flex items-center space-x-6">
+        {/* Right: Exactly two icons (strictly no text) */}
+        <div className="flex items-center space-x-3.5 md:space-x-5">
+          <Link 
+            to="/admin" 
+            className="p-2.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded-full transition-colors duration-300"
+            aria-label="Admin Dashboard"
+          >
+            {/* User-Shield Icon */}
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+          </Link>
+
           <Link 
             to="/cart" 
-            className="relative p-2.5 text-black hover:bg-gray-50 rounded-full transition-colors"
+            className="relative p-2.5 text-gray-500 hover:text-black hover:bg-gray-50 rounded-full transition-colors duration-300"
             aria-label="Cart"
           >
+            {/* Cart Icon */}
             <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
@@ -66,6 +78,7 @@ const Navbar = () => {
               </span>
             )}
           </Link>
+
 
           {/* Hamburger Icon */}
           <button
@@ -84,6 +97,7 @@ const Navbar = () => {
             )}
           </button>
         </div>
+
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -104,6 +118,16 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <Link
+              to="/admin"
+              onClick={() => setIsOpen(false)}
+              className="text-base font-medium tracking-wide py-2 text-gray-500 hover:text-black hover:pl-3 transition-all flex items-center space-x-2"
+            >
+              <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+              <span>Admin</span>
+            </Link>
           </div>
         </div>
       )}

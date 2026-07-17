@@ -11,7 +11,7 @@ const Home = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ 
-            backgroundImage: `url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=2000')` 
+            backgroundImage: `url('https://images.unsplash.com/photo-1581428982868-e410dd047a90?auto=format&fit=crop&q=80&w=2000')` 
           }}
         />
         
@@ -135,7 +135,7 @@ const Home = () => {
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                   style={{ 
-                    backgroundImage: `url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200')` 
+                    backgroundImage: `url('https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&q=80&w=1200')` 
                   }}
                 />
                 {/* Bottom to top gradient overlay */}
@@ -155,7 +155,7 @@ const Home = () => {
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                   style={{ 
-                    backgroundImage: `url('https://images.unsplash.com/photo-1617806118233-18e1db207faf?auto=format&fit=crop&q=80&w=800')` 
+                    backgroundImage: `url('https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800')` 
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
@@ -173,7 +173,7 @@ const Home = () => {
                 <div 
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                   style={{ 
-                    backgroundImage: `url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800')` 
+                    backgroundImage: `url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=800')` 
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
@@ -193,7 +193,7 @@ const Home = () => {
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 lg:h-full"
                 style={{ 
-                  backgroundImage: `url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800')` 
+                  backgroundImage: `url('https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800')` 
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
@@ -279,7 +279,7 @@ const Home = () => {
           {/* Bottom section: Border & Copyright */}
           <div className="border-t border-gray-100 pt-8 flex items-center justify-center">
             <p className="text-gray-400 text-xs text-center font-medium">
-              &copy; {new Date().getFullYear()} Basnayaka Furniture House. All rights reserved.
+              &copy; 2026 Basnayake Furniture House. All rights reserved.
             </p>
           </div>
 
