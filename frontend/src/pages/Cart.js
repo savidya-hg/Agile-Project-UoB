@@ -4,7 +4,7 @@ import { useCart } from '../context/CartContext';
 import './Cart.css';
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, clearCart, getTotalPrice } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, clearCart, getTotalPrice, getTotalItems } = useCart();
   const navigate = useNavigate();
   const [customerName, setCustomerName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -12,6 +12,7 @@ const Cart = () => {
   const [isSending, setIsSending] = useState(false);
 
   const totalPrice = getTotalPrice();
+  const totalItems = getTotalItems();
 
   // Format currency
   const formatPrice = (price) => {
@@ -66,14 +67,14 @@ const Cart = () => {
     const clientPhone = '947XXXXXXXXX'; // Replace with client's number
     const message = generateWhatsAppMessage();
     const encodedMessage = encodeURIComponent(message);
-    
+
     // Open WhatsApp
     window.open(`https://wa.me/${clientPhone}?text=${encodedMessage}`, '_blank');
-    
+
     // Clear cart after sending
     clearCart();
     setIsSending(false);
-    
+
     // Show success message
     alert('✅ Order sent via WhatsApp! The shop will contact you shortly.');
     navigate('/');
@@ -84,7 +85,7 @@ const Cart = () => {
       <div className="cart-empty">
         <div className="empty-cart-icon">🛒</div>
         <h1>Your cart is empty</h1>
-        <p>Browse our collection and add items you love!</p>
+        <p>Browse our premium collection and add the pieces you love.</p>
         <Link to="/browse" className="btn-primary">Start Shopping</Link>
       </div>
     );
@@ -92,8 +93,17 @@ const Cart = () => {
 
   return (
     <div className="cart-page">
-      <h1>🛒 Shopping Cart</h1>
-      
+      {/* Page header — mirrors the Home hero styling */}
+      <header className="cart-header">
+        <div className="cart-header-text">
+          <h1>Your Shopping Cart</h1>
+          <p>Review your selected pieces and send your order in seconds.</p>
+        </div>
+        <span className="cart-count-pill">
+          {totalItems} {totalItems === 1 ? 'item' : 'items'}
+        </span>
+      </header>
+
       <div className="cart-grid">
         {/* Cart Items */}
         <div className="cart-items">
@@ -102,37 +112,43 @@ const Cart = () => {
               <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
               <div className="cart-item-info">
                 <h3>{item.name}</h3>
+                <span className="cart-item-category">{item.category}</span>
                 <p className="cart-item-price">{formatPrice(item.price)}</p>
-                <p className="cart-item-category">{item.category}</p>
               </div>
               <div className="cart-item-quantity">
-                <button 
+                <button
                   onClick={() => updateQuantity(item._id, item.quantity - 1)}
                   className="qty-btn"
+                  aria-label="Decrease quantity"
                 >
                   −
                 </button>
                 <span className="qty-display">{item.quantity}</span>
-                <button 
+                <button
                   onClick={() => updateQuantity(item._id, item.quantity + 1)}
                   className="qty-btn"
+                  aria-label="Increase quantity"
                 >
                   +
                 </button>
               </div>
               <div className="cart-item-total">
                 <p>{formatPrice(item.price * item.quantity)}</p>
-                <button 
+                <button
                   onClick={() => removeFromCart(item._id)}
                   className="remove-btn"
+                  aria-label="Remove item"
                 >
                   ✕
                 </button>
               </div>
             </div>
           ))}
-          
+
           <div className="cart-actions">
+            <Link to="/browse" className="continue-shopping-btn">
+              ← Continue Shopping
+            </Link>
             <button onClick={() => clearCart()} className="clear-cart-btn">
               Clear Cart
             </button>
@@ -143,12 +159,12 @@ const Cart = () => {
         <div className="order-summary">
           <h2>Order Summary</h2>
           <div className="summary-row">
-            <span>Subtotal</span>
+            <span>Subtotal ({totalItems} {totalItems === 1 ? 'item' : 'items'})</span>
             <span>{formatPrice(totalPrice)}</span>
           </div>
           <div className="summary-row">
             <span>Delivery</span>
-            <span>Free</span>
+            <span className="free-tag">Free</span>
           </div>
           <div className="summary-divider"></div>
           <div className="summary-total">
@@ -160,8 +176,8 @@ const Cart = () => {
             <h3>Customer Details</h3>
             <div className="form-group">
               <label>Full Name *</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="e.g. Amila Perera"
@@ -170,8 +186,8 @@ const Cart = () => {
             </div>
             <div className="form-group">
               <label>Phone Number *</label>
-              <input 
-                type="tel" 
+              <input
+                type="tel"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 placeholder="e.g. 0712345678"
@@ -180,8 +196,8 @@ const Cart = () => {
             </div>
             <div className="form-group">
               <label>Delivery Date *</label>
-              <input 
-                type="date" 
+              <input
+                type="date"
                 value={deliveryDate}
                 onChange={(e) => setDeliveryDate(e.target.value)}
                 required
@@ -189,15 +205,15 @@ const Cart = () => {
             </div>
           </div>
 
-          <button 
-            className="btn-primary whatsapp-btn"
+          <button
+            className="whatsapp-btn"
             onClick={handleSendOrder}
             disabled={isSending}
           >
             {isSending ? 'Sending...' : '📱 Send Order via WhatsApp'}
           </button>
           <p className="whatsapp-info">
-            Your order will be sent directly to the shop via WhatsApp.
+            🔒 Your order is sent directly to the shop via WhatsApp.
           </p>
         </div>
       </div>
