@@ -128,42 +128,6 @@ const Home = () => {
           </Link>
         </div>
       </section>
-
-      {/* ===== FOOTER ===== */}
-      <footer className="footer">
-        <div className="footer-container">
-          <div className="footer-brand">
-            <h2>BFH</h2>
-            <p>Defining modern luxury through exceptional craftsmanship and intelligent design discovery.</p>
-          </div>
-          <div className="footer-links">
-            <div className="footer-column">
-              <h4>Company</h4>
-              <ul>
-                <li><Link to="/about">Brand Story</Link></li>
-                <li><Link to="/collections">Collections</Link></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h4>Innovation</h4>
-              <ul>
-                <li><Link to="/ai-experience">AI Experience</Link></li>
-                <li><Link to="/material-science">Material Science</Link></li>
-              </ul>
-            </div>
-            <div className="footer-column">
-              <h4>Legal</h4>
-              <ul>
-                <li><Link to="/privacy">Privacy Policy</Link></li>
-                <li><Link to="/terms">Terms of Service</Link></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>© 2026 Basnayaka Furniture House. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 };
