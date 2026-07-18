@@ -1,0 +1,197 @@
+/* ===== FOOTER – glassmorphism, matches navbar ===== */
+.footer {
+  background: rgba(255, 250, 244, 0.70);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.04);
+  padding: 3rem 2rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(214, 161, 66, 0.20);
+}
+
+/* ===== Logo Card (mini version) ===== */
+.footer-logo-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.30);
+  padding: 8px 16px 8px 12px;
+  border-radius: 40px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  width: fit-content;
+}
+
+.footer-logo-icon {
+  height: 44px;
+  width: auto;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
+}
+
+.footer-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.footer-brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+  background: linear-gradient(135deg, #1a1a1a 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-brand-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8a7a6a;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  -webkit-text-fill-color: #8a7a6a;
+}
+
+.footer-tagline {
+  margin-top: 8px;
+  color: #5a4a3a;
+  font-size: 14px;
+  font-weight: 400;
+  max-width: 260px;
+}
+
+/* ===== Quick Links ===== */
+.footer-links h4,
+.footer-social h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.footer-links h4::after,
+.footer-social h4::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: linear-gradient(90deg, #d6a142, transparent);
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links ul li a {
+  color: #5a4a3a;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.25s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.footer-links ul li a:hover {
+  color: #b8860b;
+  transform: translateX(4px);
+}
+
+/* ===== WhatsApp ===== */
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(37, 211, 102, 0.12);
+  padding: 10px 20px;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 16px;
+  border: 1px solid rgba(37, 211, 102, 0.25);
+  transition: all 0.25s ease;
+  backdrop-filter: blur(4px);
+}
+
+.whatsapp-link i {
+  font-size: 24px;
+  color: #25D366;
+}
+
+.whatsapp-link:hover {
+  background: rgba(37, 211, 102, 0.20);
+  border-color: #25D366;
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.15);
+}
+
+/* ===== Bottom Bar ===== */
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  text-align: center;
+  color: #8a7a6a;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .footer-logo-card {
+    margin: 0 auto;
+  }
+  .footer-tagline {
+    max-width: 100%;
+    margin: 8px auto 0;
+  }
+  .footer-links ul {
+    align-items: center;
+  }
+  .footer-links h4::after,
+  .footer-social h4::after {
+    margin: 4px auto 0;
+  }
+  .whatsapp-link {
+    margin: 0 auto;
+  }
+  .footer-bottom {
+    font-size: 12px;
+  }
+}
