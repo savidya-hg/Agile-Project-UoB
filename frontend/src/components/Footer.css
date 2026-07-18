@@ -1,6 +1,6 @@
 /* ===== FOOTER – glassmorphism, matches navbar ===== */
 .footer {
-  background: rgba(255, 250, 244, 0.75);
+  background: rgba(250, 233, 213, 0.866);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-top: 1px solid rgba(255, 255, 255, 0.30);
@@ -40,7 +40,7 @@
 }
 
 .footer-logo-icon {
-  height: 42px;
+  height: 82px;
   width: auto;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
 }
@@ -52,7 +52,7 @@
 }
 
 .footer-brand-name {
-  font-size: 20px;
+  font-size: 35px;
   font-weight: 700;
   color: #1a1a1a;
   letter-spacing: -0.3px;
@@ -63,7 +63,7 @@
 }
 
 .footer-brand-sub {
-  font-size: 11px;
+  font-size: 20px;
   font-weight: 500;
   color: #8a7a6a;
   letter-spacing: 0.6px;
@@ -74,7 +74,7 @@
 .footer-tagline {
   margin-top: 10px;
   color: #5a4a3a;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 400;
   max-width: 260px;
   line-height: 1.5;
@@ -83,7 +83,7 @@
 /* ===== Quick Links ===== */
 .footer-links h4,
 .footer-social h4 {
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 14px;
@@ -114,7 +114,7 @@
 .footer-links ul li a {
   color: #5a4a3a;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
   transition: all 0.25s ease;
   display: inline-block;
@@ -177,7 +177,7 @@
   padding-top: 1.2rem;
   text-align: center;
   color: #8a7a6a;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.3px;
 }

@@ -20,7 +20,7 @@ const Footer = () => {
             </div>
           </div>
           <p className="footer-tagline">
-            Premium furniture with AI-driven discovery.
+            Premium furniture with AI driven discovery.
           </p>
         </div>
 
