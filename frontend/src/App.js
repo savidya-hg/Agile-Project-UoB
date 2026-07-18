@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Browse from './pages/Browse';
 import AdminDashboard from './pages/AdminDashboard';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/ai-search" element={<AISearch />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+        <Footer /> 
       </BrowserRouter>
     </CartProvider>
   );
