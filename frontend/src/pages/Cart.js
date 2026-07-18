@@ -12,11 +12,7 @@ const Cart = () => {
   const [isSending, setIsSending] = useState(false);
 
   const totalPrice = getTotalPrice();
-<<<<<<< Updated upstream
-  const totalItems = getTotalItems();
-=======
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
->>>>>>> Stashed changes
 
   // Format currency
   const formatPrice = (price) => {
@@ -86,13 +82,6 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-<<<<<<< Updated upstream
-      <div className="cart-empty">
-        <div className="empty-cart-icon">🛒</div>
-        <h1>Your cart is empty</h1>
-        <p>Browse our premium collection and add the pieces you love.</p>
-        <Link to="/browse" className="btn-primary">Start Shopping</Link>
-=======
       <div className="cart-page">
         <div className="cart-container">
           <div className="cart-empty">
@@ -104,147 +93,22 @@ const Cart = () => {
             </Link>
           </div>
         </div>
->>>>>>> Stashed changes
       </div>
     );
   }
 
   return (
     <div className="cart-page">
-<<<<<<< Updated upstream
-      {/* Page header — mirrors the Home hero styling */}
-      <header className="cart-header">
-        <div className="cart-header-text">
-          <h1>Your Shopping Cart</h1>
-          <p>Review your selected pieces and send your order in seconds.</p>
-        </div>
-        <span className="cart-count-pill">
-          {totalItems} {totalItems === 1 ? 'item' : 'items'}
-        </span>
-      </header>
-
-      <div className="cart-grid">
-        {/* Cart Items */}
-        <div className="cart-items">
-          {cartItems.map(item => (
-            <div key={item._id} className="cart-item">
-              <img src={item.imageUrl} alt={item.name} className="cart-item-image" />
-              <div className="cart-item-info">
-                <h3>{item.name}</h3>
-                <span className="cart-item-category">{item.category}</span>
-                <p className="cart-item-price">{formatPrice(item.price)}</p>
-              </div>
-              <div className="cart-item-quantity">
-                <button
-                  onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                  className="qty-btn"
-                  aria-label="Decrease quantity"
-                >
-                  −
-                </button>
-                <span className="qty-display">{item.quantity}</span>
-                <button
-                  onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                  className="qty-btn"
-                  aria-label="Increase quantity"
-                >
-                  +
-                </button>
-              </div>
-              <div className="cart-item-total">
-                <p>{formatPrice(item.price * item.quantity)}</p>
-                <button
-                  onClick={() => removeFromCart(item._id)}
-                  className="remove-btn"
-                  aria-label="Remove item"
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
-          ))}
-
-          <div className="cart-actions">
-            <Link to="/browse" className="continue-shopping-btn">
-              ← Continue Shopping
-            </Link>
-            <button onClick={() => clearCart()} className="clear-cart-btn">
-              Clear Cart
-            </button>
-=======
       <div className="cart-container">
         {/* ===== HEADER ===== */}
         <div className="cart-header">
           <div>
             <h1>Your Shopping Cart</h1>
             <p>{totalItems} {totalItems === 1 ? 'item' : 'items'} ready for your dream space.</p>
->>>>>>> Stashed changes
           </div>
           <div className="cart-header-line"></div>
         </div>
 
-<<<<<<< Updated upstream
-        {/* Order Summary */}
-        <div className="order-summary">
-          <h2>Order Summary</h2>
-          <div className="summary-row">
-            <span>Subtotal ({totalItems} {totalItems === 1 ? 'item' : 'items'})</span>
-            <span>{formatPrice(totalPrice)}</span>
-          </div>
-          <div className="summary-row">
-            <span>Delivery</span>
-            <span className="free-tag">Free</span>
-          </div>
-          <div className="summary-divider"></div>
-          <div className="summary-total">
-            <span>Total</span>
-            <span className="total-price">{formatPrice(totalPrice)}</span>
-          </div>
-
-          <div className="customer-form">
-            <h3>Customer Details</h3>
-            <div className="form-group">
-              <label>Full Name *</label>
-              <input
-                type="text"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                placeholder="e.g. Amila Perera"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Phone Number *</label>
-              <input
-                type="tel"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="e.g. 0712345678"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Delivery Date *</label>
-              <input
-                type="date"
-                value={deliveryDate}
-                onChange={(e) => setDeliveryDate(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          <button
-            className="whatsapp-btn"
-            onClick={handleSendOrder}
-            disabled={isSending}
-          >
-            {isSending ? 'Sending...' : '📱 Send Order via WhatsApp'}
-          </button>
-          <p className="whatsapp-info">
-            🔒 Your order is sent directly to the shop via WhatsApp.
-          </p>
-=======
         <div className="cart-grid">
           {/* ===== CART ITEMS ===== */}
           <div className="cart-items">
@@ -369,7 +233,6 @@ const Cart = () => {
               Your order will be sent directly to the shop via WhatsApp.
             </p>
           </div>
->>>>>>> Stashed changes
         </div>
       </div>
     </div>
