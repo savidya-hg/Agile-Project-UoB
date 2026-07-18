@@ -13,8 +13,8 @@
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  gap: 2rem;
   align-items: start;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid rgba(214, 161, 66, 0.15);
@@ -76,23 +76,29 @@
   color: #5a4a3a;
   font-size: 17px;
   font-weight: 400;
-  max-width: 260px;
+  max-width: 280px;
   line-height: 1.5;
 }
 
-/* ===== Quick Links ===== */
-.footer-links h4,
-.footer-social h4 {
+/* ===== Quick Links – SIMPLE BLOCK LAYOUT ===== */
+.footer-quick-links {
+  display: block;
+  width: 100%;
+}
+
+.footer-quick-links h4 {
   font-size: 20px;
   font-weight: 600;
   color: #1a1a1a;
-  margin-bottom: 14px;
+  margin: 0 0 14px 0;
+  padding: 0;
   letter-spacing: 0.5px;
-  position: relative;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
 }
 
-.footer-links h4::after,
-.footer-social h4::after {
+.footer-quick-links h4::after {
   content: '';
   display: block;
   width: 32px;
@@ -102,17 +108,28 @@
   margin-top: 5px;
 }
 
-/* --- ensure list sits directly under heading --- */
-.footer-links ul {
+/* List – natural block stacking */
+.footer-quick-links ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: block;
+  width: 100%;
 }
 
-.footer-links ul li a {
+.footer-quick-links ul li {
+  margin: 0;
+  padding: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.footer-quick-links ul li:last-child {
+  margin-bottom: 0;
+}
+
+.footer-quick-links ul li a {
   color: #5a4a3a;
   text-decoration: none;
   font-size: 18px;
@@ -120,10 +137,10 @@
   transition: all 0.25s ease;
   display: inline-block;
   position: relative;
-  white-space: nowrap;  /* ← prevents "AI Search" from wrapping */
+  white-space: nowrap;
 }
 
-.footer-links ul li a::after {
+.footer-quick-links ul li a::after {
   content: '';
   position: absolute;
   bottom: -2px;
@@ -134,13 +151,41 @@
   transition: width 0.3s ease;
 }
 
-.footer-links ul li a:hover {
+.footer-quick-links ul li a:hover {
   color: #b8860b;
   transform: translateX(4px);
 }
 
-.footer-links ul li a:hover::after {
+.footer-quick-links ul li a:hover::after {
   width: 100%;
+}
+
+/* ===== Contact Us ===== */
+.footer-social {
+  display: block;
+  width: 100%;
+}
+
+.footer-social h4 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 14px 0;
+  padding: 0;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  display: block;
+  width: 100%;
+}
+
+.footer-social h4::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 3px;
+  background: linear-gradient(90deg, #d6a142, transparent);
+  border-radius: 4px;
+  margin-top: 5px;
 }
 
 /* ===== WhatsApp ===== */
@@ -158,6 +203,7 @@
   border: 1px solid rgba(37, 211, 102, 0.20);
   transition: all 0.25s ease;
   backdrop-filter: blur(4px);
+  white-space: nowrap;
 }
 
 .whatsapp-link i {
@@ -207,13 +253,18 @@
   .footer-tagline {
     max-width: 100%;
     margin: 8px auto 0;
+    text-align: center;
   }
-  .footer-links ul {
-    align-items: center;
+  .footer-quick-links,
+  .footer-social {
+    text-align: center;
   }
-  .footer-links h4::after,
+  .footer-quick-links h4::after,
   .footer-social h4::after {
-    margin: 4px auto 0;
+    margin: 5px auto 0;
+  }
+  .footer-quick-links ul li {
+    text-align: center;
   }
   .whatsapp-link {
     margin: 0 auto;
@@ -242,8 +293,7 @@
   .footer-tagline {
     font-size: 12px;
   }
-  /* Reduce link size on very small screens so "AI Search" stays on one line */
-  .footer-links ul li a {
+  .footer-quick-links ul li a {
     font-size: 15px;
   }
   .whatsapp-link {

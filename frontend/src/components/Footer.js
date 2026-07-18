@@ -25,7 +25,7 @@ const Footer = () => {
         </div>
 
         {/* ===== Center: Quick Links ===== */}
-        <div className="footer-links">
+        <div className="footer-quick-links">
           <h4>Quick Links</h4>
           <ul>
             <li><Link to="/">Home</Link></li>
