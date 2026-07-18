@@ -57,33 +57,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ===== FEATURED PRODUCTS (NEW) ===== */}
-      <section className="featured-section">
-        <div className="section-header">
-          <h2>Featured Furniture</h2>
-          <p>Our most loved pieces, curated for your dream space.</p>
-          <div className="section-line"></div>
-        </div>
-        <div className="product-grid">
-          {featuredProducts.map((product, index) => (
-            <div className="product-card animate-fade-up" style={{ animationDelay: `${index * 0.1}s` }} key={product.id}>
-              <div className="product-image">
-                <img src={product.image} alt={product.name} />
-                <div className="product-overlay">
-                  <Link to={`/product/${product.id}`} className="btn-outline">View Details</Link>
-                </div>
-              </div>
-              <div className="product-info">
-                <h3>{product.name}</h3>
-                <span className="product-price">{product.price}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="section-cta">
-          <Link to="/browse" className="btn-primary">Browse All Products <i className="fas fa-arrow-right"></i></Link>
-        </div>
-      </section>
+     
 
       {/* ===== CURATED SPACES (existing) ===== */}
       <section className="spaces-section">
