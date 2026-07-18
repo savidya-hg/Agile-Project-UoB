@@ -6,7 +6,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.30);
   box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.04);
   padding: 2.5rem 2rem 1.2rem;
-  margin: 0; /* Remove margin-top to eliminate gap */
+  margin: 0;
 }
 
 .footer-inner {
@@ -83,7 +83,7 @@
 /* ===== Quick Links ===== */
 .footer-links h4,
 .footer-social h4 {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   color: #1a1a1a;
   margin-bottom: 14px;
@@ -102,6 +102,7 @@
   margin-top: 5px;
 }
 
+/* --- ensure list sits directly under heading --- */
 .footer-links ul {
   list-style: none;
   padding: 0;
@@ -114,11 +115,12 @@
 .footer-links ul li a {
   color: #5a4a3a;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   transition: all 0.25s ease;
   display: inline-block;
   position: relative;
+  white-space: nowrap;  /* ← prevents "AI Search" from wrapping */
 }
 
 .footer-links ul li a::after {
@@ -239,6 +241,10 @@
   }
   .footer-tagline {
     font-size: 12px;
+  }
+  /* Reduce link size on very small screens so "AI Search" stays on one line */
+  .footer-links ul li a {
+    font-size: 15px;
   }
   .whatsapp-link {
     font-size: 14px;
