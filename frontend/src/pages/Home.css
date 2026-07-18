@@ -410,6 +410,74 @@
   background: #b0885e;
 }
 
+/* ----- FOOTER (unchanged but with slight tweaks) ----- */
+.footer {
+  background: #f2ece4;
+  border-top: 1px solid #e8ddd0;
+  padding: 3.5rem 2rem 1.5rem;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #e8ddd0;
+}
+
+.footer-brand h2 {
+  color: #3d2c1e;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand p {
+  color: #6a5a4a;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+}
+
+.footer-column h4 {
+  color: #3d2c1e;
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-column ul li a {
+  color: #6a5a4a;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #c49a6c;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.8rem;
+  color: #6a5a4a;
+  font-size: 0.9rem;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hero-title {

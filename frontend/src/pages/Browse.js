@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
 import API from "../api/axiosConfig";
 import AIUploader from "../components/AIUploader";
 import { useCart } from "../context/CartContext";
 import "./Browse.css";
+import { Link } from "react-router-dom";
 
 const Browse = () => {
-  const location = useLocation();
   const [allProducts, setAllProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,6 +32,7 @@ const Browse = () => {
       try {
         const res = await API.get("/products");
         setAllProducts(res.data || []);
+        setDisplayedProducts(res.data || []);
       } catch (err) {
         console.error("Error fetching products:", err);
       } finally {
@@ -82,51 +82,6 @@ const Browse = () => {
 
     setDisplayedProducts(filtered);
   };
-
-  useEffect(() => {
-    if (allProducts.length === 0) return;
-
-    const params = new URLSearchParams(location.search);
-    const urlCategory = params.get("category");
-
-    if (urlCategory) {
-      const cleanUrl = urlCategory.toLowerCase().replace(/[^a-z0-9]/g, "");
-      const matchedCategory = allProducts
-        .map((p) => p.category)
-        .filter(Boolean)
-        .find((cat) => cat.toLowerCase().replace(/[^a-z0-9]/g, "") === cleanUrl);
-
-      if (matchedCategory) {
-        setSelectedCategory(matchedCategory);
-        applyFilters(
-          allProducts,
-          searchTerm,
-          matchedCategory,
-          selectedMaterial,
-          sortBy
-        );
-      } else {
-        setSelectedCategory("All");
-        applyFilters(
-          allProducts,
-          searchTerm,
-          "All",
-          selectedMaterial,
-          sortBy
-        );
-      }
-    } else {
-      setSelectedCategory("All");
-      applyFilters(
-        allProducts,
-        searchTerm,
-        "All",
-        selectedMaterial,
-        sortBy
-      );
-    }
-    // eslint-disable-next-line
-  }, [location.search, allProducts]);
 
   const handleAISearch = (results) => {
     if (results && results.length > 0) {
@@ -227,6 +182,16 @@ const Browse = () => {
     alert(`${product.name} added to cart`);
   };
 
+  const openAISearchFromHeader = () => {
+    setAiEnabled(true);
+
+    setTimeout(() => {
+      document.getElementById("ai-search-section")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
 
   if (loading) {
     return <div className="bfh-loading">Loading luxury furniture...</div>;
@@ -234,6 +199,34 @@ const Browse = () => {
 
   return (
     <div className="browse-wrapper">
+      <header className="browse-header">
+        <Link to="/" className="browse-logo">
+          BFH
+        </Link>
+
+        <nav className="browse-nav">
+          <Link to="/">Home</Link>
+
+          <Link to="/browse" className="active">
+            Shop
+          </Link>
+
+          <button
+            type="button"
+            className="browse-nav-button"
+            onClick={openAISearchFromHeader}
+          >
+            AI Search
+          </button>
+
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <Link to="/cart" className="browse-cart" aria-label="Open cart">
+          🛒
+        </Link>
+      </header>
 
       <div className="bfh-shop-page">
         <aside className="bfh-filter-panel">
@@ -521,6 +514,37 @@ const Browse = () => {
         </main>
       </div>
 
+      <footer className="browse-footer" id="about">
+        <div className="footer-logo">BFH</div>
+
+        <div className="footer-links">
+          <div className="footer-column">
+            <a href="#brand-story">Brand Story</a>
+            <a href="#terms">Terms of Service</a>
+          </div>
+
+          <div className="footer-column">
+            <a href="#collections">Collections</a>
+          </div>
+
+          <div className="footer-column">
+            <button
+              type="button"
+              onClick={openAISearchFromHeader}
+            >
+              AI Experience
+            </button>
+          </div>
+
+          <div className="footer-column" id="contact">
+            <a href="#privacy">Privacy Policy</a>
+          </div>
+        </div>
+
+        <p className="footer-copyright">
+          © 2024 Basnayaka Furniture House. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 };
