@@ -83,8 +83,21 @@ const AdminAddProduct = () => {
           <textarea name="description" value={form.description} onChange={handleChange} rows="3" />
         </div>
         <div className="form-group">
-          <label>Category</label>
-          <input name="category" value={form.category} onChange={handleChange} placeholder="e.g. Living Room" />
+          <label>Category *</label>
+          <select 
+            name="category" 
+            value={form.category} 
+            onChange={handleChange} 
+            required
+            style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--border-color)', background: '#111', color: 'white' }}
+          >
+            <option value="">Select a Category</option>
+            <option value="Living Room">Living Room</option>
+            <option value="Bedroom">Bedroom</option>
+            <option value="Dining">Dining</option>
+            <option value="Office">Office</option>
+            <option value="Outdoor">Outdoor</option>
+          </select>
         </div>
         <div className="form-group">
           <label>Product Image *</label>
