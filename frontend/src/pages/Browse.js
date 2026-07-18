@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import API from "../api/axiosConfig";
 import AIUploader from "../components/AIUploader";
 import { useCart } from "../context/CartContext";
 import "./Browse.css";
 
 const Browse = () => {
+  const location = useLocation();
   const [allProducts, setAllProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +33,6 @@ const Browse = () => {
       try {
         const res = await API.get("/products");
         setAllProducts(res.data || []);
-        setDisplayedProducts(res.data || []);
       } catch (err) {
         console.error("Error fetching products:", err);
       } finally {
@@ -81,6 +82,51 @@ const Browse = () => {
 
     setDisplayedProducts(filtered);
   };
+
+  useEffect(() => {
+    if (allProducts.length === 0) return;
+
+    const params = new URLSearchParams(location.search);
+    const urlCategory = params.get("category");
+
+    if (urlCategory) {
+      const cleanUrl = urlCategory.toLowerCase().replace(/[^a-z0-9]/g, "");
+      const matchedCategory = allProducts
+        .map((p) => p.category)
+        .filter(Boolean)
+        .find((cat) => cat.toLowerCase().replace(/[^a-z0-9]/g, "") === cleanUrl);
+
+      if (matchedCategory) {
+        setSelectedCategory(matchedCategory);
+        applyFilters(
+          allProducts,
+          searchTerm,
+          matchedCategory,
+          selectedMaterial,
+          sortBy
+        );
+      } else {
+        setSelectedCategory("All");
+        applyFilters(
+          allProducts,
+          searchTerm,
+          "All",
+          selectedMaterial,
+          sortBy
+        );
+      }
+    } else {
+      setSelectedCategory("All");
+      applyFilters(
+        allProducts,
+        searchTerm,
+        "All",
+        selectedMaterial,
+        sortBy
+      );
+    }
+    // eslint-disable-next-line
+  }, [location.search, allProducts]);
 
   const handleAISearch = (results) => {
     if (results && results.length > 0) {
