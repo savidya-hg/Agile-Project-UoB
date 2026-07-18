@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import AISearchModal from './AISearchModal';
 import './Navbar.css';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [showAISearch, setShowAISearch] = useState(false);
     const [category, setCategory] = useState('');
     const { getTotalItems } = useCart();
     const totalItems = getTotalItems();
@@ -56,7 +58,7 @@ const Navbar = () => {
                         <ul className="nav-links">
                             <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
                             <li><Link to="/browse" onClick={() => setMenuOpen(false)}>Products</Link></li>
-                            <li><Link to="/ai-search" onClick={() => setMenuOpen(false)}>AI Search</Link></li>
+                            <li><a href="#" onClick={(e) => { e.preventDefault(); setShowAISearch(true); setMenuOpen(false); }}>AI Search</a></li>
                             <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link></li>
                         </ul>
                         <div className="category-wrapper">
@@ -94,7 +96,7 @@ const Navbar = () => {
                 <ul>
                     <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
                     <li><Link to="/browse" onClick={() => setMenuOpen(false)}>Products</Link></li>
-                    <li><Link to="/ai-search" onClick={() => setMenuOpen(false)}>AI Search</Link></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); setShowAISearch(true); setMenuOpen(false); }}>AI Search</a></li>
                     <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link></li>
                     <li>
                         <select
@@ -111,6 +113,7 @@ const Navbar = () => {
                     </li>
                 </ul>
             </div>
+            {showAISearch && <AISearchModal onClose={() => setShowAISearch(false)} />}
         </header>
     );
 };
