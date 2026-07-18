@@ -69,25 +69,29 @@ const Home = () => {
           </Link>
         </div>
         <div className="spaces-grid">
-          <div className="space-card animate-fade-up">
-            <div className="space-icon"><i className="fas fa-couch"></i></div>
-            <h3>Living Room</h3>
-            <p>The heart of your home, redefined.</p>
+          <div className="space-card animate-fade-up" style={{ backgroundImage: "url('/assets/living_room_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Living Room</h3>
+              <p>The heart of your home, redefined.</p>
+            </div>
           </div>
-          <div className="space-card animate-fade-up delay-1">
-            <div className="space-icon"><i className="fas fa-bed"></i></div>
-            <h3>Bedroom</h3>
-            <p>Sanctuaries of serenity.</p>
+          <div className="space-card animate-fade-up delay-1" style={{ backgroundImage: "url('/assets/bedroom_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Bedroom</h3>
+              <p>Sanctuaries of serenity.</p>
+            </div>
           </div>
-          <div className="space-card animate-fade-up delay-2">
-            <div className="space-icon"><i className="fas fa-utensils"></i></div>
-            <h3>Dining</h3>
-            <p>Gather and celebrate in style.</p>
+          <div className="space-card animate-fade-up delay-2" style={{ backgroundImage: "url('/assets/dining_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Dining</h3>
+              <p>Gather and celebrate in style.</p>
+            </div>
           </div>
-          <div className="space-card animate-fade-up delay-3">
-            <div className="space-icon"><i className="fas fa-chair"></i></div>
-            <h3>Office</h3>
-            <p>Productivity meets elegance.</p>
+          <div className="space-card animate-fade-up delay-3" style={{ backgroundImage: "url('/assets/office_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Office</h3>
+              <p>Productivity meets elegance.</p>
+            </div>
           </div>
         </div>
       </section>
