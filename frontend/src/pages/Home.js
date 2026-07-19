@@ -57,33 +57,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ===== FEATURED PRODUCTS (NEW) ===== */}
-      <section className="featured-section">
-        <div className="section-header">
-          <h2>Featured Furniture</h2>
-          <p>Our most loved pieces, curated for your dream space.</p>
-          <div className="section-line"></div>
-        </div>
-        <div className="product-grid">
-          {featuredProducts.map((product, index) => (
-            <div className="product-card animate-fade-up" style={{ animationDelay: `${index * 0.1}s` }} key={product.id}>
-              <div className="product-image">
-                <img src={product.image} alt={product.name} />
-                <div className="product-overlay">
-                  <Link to={`/product/${product.id}`} className="btn-outline">View Details</Link>
-                </div>
-              </div>
-              <div className="product-info">
-                <h3>{product.name}</h3>
-                <span className="product-price">{product.price}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="section-cta">
-          <Link to="/browse" className="btn-primary">Browse All Products <i className="fas fa-arrow-right"></i></Link>
-        </div>
-      </section>
+     
 
       {/* ===== CURATED SPACES (existing) ===== */}
       <section className="spaces-section">
@@ -95,25 +69,29 @@ const Home = () => {
           </Link>
         </div>
         <div className="spaces-grid">
-          <div className="space-card animate-fade-up">
-            <div className="space-icon"><i className="fas fa-couch"></i></div>
-            <h3>Living Room</h3>
-            <p>The heart of your home, redefined.</p>
+          <div className="space-card animate-fade-up" style={{ backgroundImage: "url('/assets/living_room_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Living Room</h3>
+              <p>The heart of your home, redefined.</p>
+            </div>
           </div>
-          <div className="space-card animate-fade-up delay-1">
-            <div className="space-icon"><i className="fas fa-bed"></i></div>
-            <h3>Bedroom</h3>
-            <p>Sanctuaries of serenity.</p>
+          <div className="space-card animate-fade-up delay-1" style={{ backgroundImage: "url('/assets/bedroom_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Bedroom</h3>
+              <p>Sanctuaries of serenity.</p>
+            </div>
           </div>
-          <div className="space-card animate-fade-up delay-2">
-            <div className="space-icon"><i className="fas fa-utensils"></i></div>
-            <h3>Dining</h3>
-            <p>Gather and celebrate in style.</p>
+          <div className="space-card animate-fade-up delay-2" style={{ backgroundImage: "url('/assets/dining_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Dining</h3>
+              <p>Gather and celebrate in style.</p>
+            </div>
           </div>
-          <div className="space-card animate-fade-up delay-3">
-            <div className="space-icon"><i className="fas fa-chair"></i></div>
-            <h3>Office</h3>
-            <p>Productivity meets elegance.</p>
+          <div className="space-card animate-fade-up delay-3" style={{ backgroundImage: "url('/assets/office_scene.png')" }}>
+            <div className="space-card-content">
+              <h3>Office</h3>
+              <p>Productivity meets elegance.</p>
+            </div>
           </div>
         </div>
       </section>
