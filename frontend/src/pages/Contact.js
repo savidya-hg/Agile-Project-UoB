@@ -8,13 +8,18 @@ const Contact = () => {
 
   return (
     <div className="contact-page">
-      {/* ===== HERO SECTION ===== */}
-      <section className="contact-hero">
-        <div className="contact-hero-content">
-          <h1 className="contact-title">Get In Touch</h1>
-          <p className="contact-subtitle">
-            We'd love to hear from you. Reach out for inquiries, custom orders, or to schedule a consultation.
-          </p>
+      {/* ===== HERO SECTION – with background image ===== */}
+      <section 
+        className="contact-hero" 
+        style={{ backgroundImage: "url('/assets/get-in-touch.png')" }}
+      >
+        <div className="contact-hero-overlay">
+          <div className="contact-hero-content">
+            <h1 className="contact-title animate-fade-up">Get In Touch</h1>
+            <p className="contact-subtitle animate-fade-up delay-1">
+              We'd love to hear from you. Reach out for inquiries, custom orders, or to schedule a consultation.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -22,7 +27,7 @@ const Contact = () => {
       <section className="contact-info-section">
         <div className="contact-grid">
           {/* ===== Address Card ===== */}
-          <div className="contact-card">
+          <div className="contact-card animate-fade-up">
             <div className="contact-card-icon">
               <i className="fas fa-location-dot"></i>
             </div>
@@ -42,7 +47,7 @@ const Contact = () => {
           </div>
 
           {/* ===== WhatsApp Card ===== */}
-          <div className="contact-card">
+          <div className="contact-card animate-fade-up delay-1">
             <div className="contact-card-icon">
               <i className="fab fa-whatsapp"></i>
             </div>
@@ -59,7 +64,7 @@ const Contact = () => {
           </div>
 
           {/* ===== Email Card ===== */}
-          <div className="contact-card">
+          <div className="contact-card animate-fade-up delay-2">
             <div className="contact-card-icon">
               <i className="fas fa-envelope"></i>
             </div>
