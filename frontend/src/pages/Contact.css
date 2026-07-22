@@ -1,0 +1,321 @@
+/* ===== CONTACT PAGE – matches Home page design ===== */
+.contact-page {
+  background: #f9f6f0;
+  color: #3d2c1e;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* ===== HERO SECTION ===== */
+.contact-hero {
+  background: linear-gradient(135deg, #f2ece4, #e8ddd0);
+  padding: 6rem 2rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid #e8ddd0;
+  margin-top: 0;
+}
+
+.contact-hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #3d2c1e;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+}
+
+.contact-subtitle {
+  font-size: 1.2rem;
+  color: #6a5a4a;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== CONTACT INFO GRID ===== */
+.contact-info-section {
+  padding: 4rem 2rem;
+  background: #ffffff;
+}
+
+.contact-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* ===== Contact Cards ===== */
+.contact-card {
+  background: #f9f6f0;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid #e8ddd0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  border-color: #c49a6c;
+  box-shadow: 0 12px 32px rgba(196, 154, 108, 0.08);
+}
+
+.contact-card-icon {
+  font-size: 2.8rem;
+  color: #c49a6c;
+  margin-bottom: 1rem;
+}
+
+.contact-card h3 {
+  font-size: 1.4rem;
+  color: #3d2c1e;
+  margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+  color: #6a5a4a;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.contact-address {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.contact-phone {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3d2c1e;
+}
+
+.contact-email {
+  font-size: 1.05rem;
+  word-break: break-all;
+}
+
+/* ===== Contact Links ===== */
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c49a6c;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  gap: 0.8rem;
+  color: #b0885e;
+}
+
+/* ===== WhatsApp Button ===== */
+.contact-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: #ffffff;
+  padding: 0.7rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25);
+}
+
+.contact-whatsapp-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  background: #20b859;
+}
+
+.contact-whatsapp-btn i {
+  font-size: 1.3rem;
+}
+
+/* ===== MAP SECTION ===== */
+.map-section {
+  padding: 4rem 2rem;
+  background: #f9f6f0;
+}
+
+.map-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.map-container h2 {
+  font-size: 2.5rem;
+  color: #3d2c1e;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.map-container > p {
+  color: #6a5a4a;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8ddd0;
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.map-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.map-actions .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #c49a6c;
+  color: #ffffff;
+  padding: 0.8rem 2.2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 16px rgba(196, 154, 108, 0.25);
+}
+
+.map-actions .btn-primary:hover {
+  background: #b0885e;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(196, 154, 108, 0.35);
+}
+
+/* ===== CONSULTATION CTA (matches Home page) ===== */
+.consultation-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f2ece4, #e8ddd0);
+  text-align: center;
+}
+
+.consultation-content h2 {
+  font-size: 2.8rem;
+  color: #3d2c1e;
+  margin-bottom: 0.5rem;
+}
+
+.consultation-content p {
+  font-size: 1.2rem;
+  color: #6a5a4a;
+  margin-bottom: 1.5rem;
+}
+
+.consultation-content .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #c49a6c;
+  color: #ffffff;
+  padding: 0.9rem 2.4rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 16px rgba(196, 154, 108, 0.25);
+}
+
+.consultation-content .btn-primary:hover {
+  background: #b0885e;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(196, 154, 108, 0.35);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .contact-title {
+    font-size: 2.5rem;
+  }
+  .contact-subtitle {
+    font-size: 1rem;
+  }
+  .contact-hero {
+    padding: 4rem 1.5rem 3rem;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .map-wrapper {
+    height: 300px;
+  }
+  .map-container h2 {
+    font-size: 2rem;
+  }
+  .consultation-content h2 {
+    font-size: 2rem;
+  }
+  .consultation-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-title {
+    font-size: 2rem;
+  }
+  .contact-hero {
+    padding: 3rem 1rem 2rem;
+  }
+  .contact-info-section {
+    padding: 2rem 1rem;
+  }
+  .contact-card {
+    padding: 1.8rem 1.2rem;
+  }
+  .map-wrapper {
+    height: 220px;
+  }
+  .map-section {
+    padding: 2rem 1rem;
+  }
+  .consultation-section {
+    padding: 2.5rem 1rem;
+  }
+  .consultation-content .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+  .map-actions .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}
