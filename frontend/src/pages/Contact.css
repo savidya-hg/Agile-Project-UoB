@@ -1,0 +1,359 @@
+/* ===== CONTACT PAGE – matches Home page design ===== */
+.contact-page {
+  background: #f9f6f0;
+  color: #3d2c1e;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* ===== ANIMATIONS (same as Home) ===== */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+
+/* ===== HERO SECTION with background image ===== */
+.contact-hero {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  /* Add top padding to account for fixed navbar (same as home) */
+  padding-top: 80px;
+}
+
+.contact-hero-overlay {
+  background: rgba(255, 252, 245, 0.55);
+  backdrop-filter: blur(3px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+}
+
+.contact-hero-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #3d2c1e;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 12px rgba(255,255,255,0.4);
+}
+
+.contact-subtitle {
+  font-size: 1.2rem;
+  color: #4f3e2e;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  text-shadow: 0 1px 4px rgba(255,255,255,0.3);
+}
+
+/* ===== CONTACT INFO GRID ===== */
+.contact-info-section {
+  padding: 4rem 2rem;
+  background: #ffffff;
+}
+
+.contact-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* ===== Contact Cards ===== */
+.contact-card {
+  background: #f9f6f0;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid #e8ddd0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  border-color: #c49a6c;
+  box-shadow: 0 12px 32px rgba(196, 154, 108, 0.08);
+}
+
+.contact-card-icon {
+  font-size: 2.8rem;
+  color: #c49a6c;
+  margin-bottom: 1rem;
+}
+
+.contact-card h3 {
+  font-size: 1.4rem;
+  color: #3d2c1e;
+  margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+  color: #6a5a4a;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.contact-address {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.contact-phone {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #3d2c1e;
+}
+
+.contact-email {
+  font-size: 1.05rem;
+  word-break: break-all;
+}
+
+/* ===== Contact Links ===== */
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #c49a6c;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  gap: 0.8rem;
+  color: #b0885e;
+}
+
+/* ===== WhatsApp Button ===== */
+.contact-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: #ffffff;
+  padding: 0.7rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.25);
+}
+
+.contact-whatsapp-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  background: #20b859;
+}
+
+.contact-whatsapp-btn i {
+  font-size: 1.3rem;
+}
+
+/* ===== MAP SECTION ===== */
+.map-section {
+  padding: 4rem 2rem;
+  background: #f9f6f0;
+}
+
+.map-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.map-container h2 {
+  font-size: 2.5rem;
+  color: #3d2c1e;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.map-container > p {
+  color: #6a5a4a;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8ddd0;
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.map-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.map-actions .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #c49a6c;
+  color: #ffffff;
+  padding: 0.8rem 2.2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 16px rgba(196, 154, 108, 0.25);
+}
+
+.map-actions .btn-primary:hover {
+  background: #b0885e;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(196, 154, 108, 0.35);
+}
+
+/* ===== CONSULTATION CTA (matches Home page) ===== */
+.consultation-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f2ece4, #e8ddd0);
+  text-align: center;
+}
+
+.consultation-content h2 {
+  font-size: 2.8rem;
+  color: #3d2c1e;
+  margin-bottom: 0.5rem;
+}
+
+.consultation-content p {
+  font-size: 1.2rem;
+  color: #6a5a4a;
+  margin-bottom: 1.5rem;
+}
+
+.consultation-content .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #c49a6c;
+  color: #ffffff;
+  padding: 0.9rem 2.4rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 16px rgba(196, 154, 108, 0.25);
+}
+
+.consultation-content .btn-primary:hover {
+  background: #b0885e;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(196, 154, 108, 0.35);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .contact-hero {
+    min-height: 50vh;
+    padding-top: 100px;
+  }
+  .contact-title {
+    font-size: 2.5rem;
+  }
+  .contact-subtitle {
+    font-size: 1rem;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .map-wrapper {
+    height: 300px;
+  }
+  .map-container h2 {
+    font-size: 2rem;
+  }
+  .consultation-content h2 {
+    font-size: 2rem;
+  }
+  .consultation-content p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-hero {
+    min-height: 40vh;
+    padding-top: 80px;
+  }
+  .contact-title {
+    font-size: 2rem;
+  }
+  .contact-info-section {
+    padding: 2rem 1rem;
+  }
+  .contact-card {
+    padding: 1.8rem 1.2rem;
+  }
+  .map-wrapper {
+    height: 220px;
+  }
+  .map-section {
+    padding: 2rem 1rem;
+  }
+  .consultation-section {
+    padding: 2.5rem 1rem;
+  }
+  .consultation-content .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+  .map-actions .btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}
