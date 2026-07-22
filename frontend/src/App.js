@@ -27,6 +27,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/ai-search" element={<AISearch />} />
           <Route path="/contact" element={<Contact />} />
+          
         </Routes>
         <Footer /> 
       </BrowserRouter>
