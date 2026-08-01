@@ -13,8 +13,8 @@ exports.getAllProducts = async (req, res) => {
 // POST new product (receives vector from frontend)
 exports.createProduct = async (req, res) => {
   try {
-    const { name, price, description, category, imageUrl, vector } = req.body;
-    const product = new Product({ name, price, description, category, imageUrl, vector });
+    const { name, price, description, category, material, imageUrl, vector } = req.body;
+    const product = new Product({ name, price, description, category, material, imageUrl, vector });
     await product.save();
     res.status(201).json(product);
   } catch (err) {
@@ -36,10 +36,10 @@ exports.getProductById = async (req, res) => {
 // PUT update product
 exports.updateProduct = async (req, res) => {
   try {
-    const { name, price, description, category, imageUrl, vector } = req.body;
+    const { name, price, description, category, material, imageUrl, vector } = req.body;
     const updated = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, price, description, category, imageUrl, vector },
+      { name, price, description, category, material, imageUrl, vector },
       { new: true, runValidators: true }
     );
     if (!updated) return res.status(404).json({ error: 'Product not found' });

@@ -1,18 +1,178 @@
-.add-product-container { max-width: 700px; margin: 0 auto; padding: 1rem; }
-.add-form { background: var(--card-bg); padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); }
-.form-group { margin-bottom: 1.5rem; }
-.form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--text-light); }
-.form-group input, .form-group textarea {
+/* ==========================================================================
+   ADMIN ADD & EDIT PRODUCT STYLES (Matching Home & Admin Dashboard Theme)
+   ========================================================================== */
+
+.add-product-wrapper {
+  background-color: #f9f6f0;
+  color: #3d2c1e;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
   width: 100%;
-  padding: 0.8rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  background: #111;
-  color: white;
 }
-.preview-img { margin-top: 0.5rem; max-width: 200px; border-radius: 8px; border: 2px solid var(--border-color); }
+
+.add-product-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 160px 1.5rem 80px; /* Accounts for fixed navbar */
+  box-sizing: border-box;
+}
+
+.add-product-container h1 {
+  font-size: 2.3rem;
+  font-weight: 600;
+  color: #2d1e12;
+  margin-bottom: 1.8rem;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.add-form {
+  background: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(196, 154, 108, 0.08);
+  border: 1px solid #e8ddd0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #3d2c1e;
+  font-size: 0.95rem;
+}
+
+.form-group input:not([type="file"]),
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  border: 1.5px solid #e8ddd0;
+  background: #ffffff;
+  color: #3d2c1e;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-group select option {
+  background: #ffffff;
+  color: #3d2c1e;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #c49a6c;
+  box-shadow: 0 0 0 4px rgba(196, 154, 108, 0.15);
+}
+
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 0.6rem 0;
+  font-size: 0.9rem;
+  color: #6a5a4a;
+}
+
+.preview-img {
+  margin-top: 0.8rem;
+  max-width: 220px;
+  border-radius: 14px;
+  border: 1px solid #e8ddd0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
 .hint {
-  color: var(--text-muted);
+  color: #8a7a6a;
   font-size: 0.85rem;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.add-form .btn-primary {
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: #c49a6c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(196, 154, 108, 0.3);
+  transition: all 0.3s ease;
+}
+
+.add-form .btn-primary:hover:not(:disabled) {
+  background: #b0885e;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(196, 154, 108, 0.45);
+}
+
+.add-form .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.add-form .btn-secondary {
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: transparent;
+  border: 2px solid #c49a6c;
+  color: #c49a6c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-form .btn-secondary:hover {
+  background: #c49a6c;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .add-product-container {
+    padding: 120px 1rem 60px;
+  }
+  .add-product-container h1 {
+    font-size: 1.8rem;
+  }
+  .add-form {
+    padding: 1.8rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-product-container {
+    padding: 100px 0.75rem 40px;
+  }
+  .add-product-container h1 {
+    font-size: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .add-form {
+    padding: 1.5rem 1rem;
+    border-radius: 14px;
+  }
+  .form-group input:not([type="file"]),
+  .form-group textarea,
+  .form-group select {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem;
+  }
+  .add-form .btn-primary,
+  .add-form .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
 }

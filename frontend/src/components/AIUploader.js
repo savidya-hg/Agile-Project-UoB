@@ -63,7 +63,7 @@ const AIUploader = ({ products, onSearchResults }) => {
     <div className="ai-uploader">
       <div className="upload-area">
         <label htmlFor="ai-upload-input" className="upload-label">
-          <div className="upload-icon">📷</div>
+          <div className="upload-icon"><i className="fas fa-camera"></i></div>
           <span>Upload a photo of furniture</span>
           <span className="upload-hint">Find similar items in our collection</span>
         </label>
@@ -86,7 +86,7 @@ const AIUploader = ({ products, onSearchResults }) => {
       {preview && !uploading && (
         <div className="preview-container">
           <img src={preview} alt="Uploaded furniture" className="preview-image" />
-          <button className="clear-btn" onClick={handleClear}>✕</button>
+          <button className="clear-btn" onClick={handleClear}><i className="fas fa-times"></i></button>
         </div>
       )}
 

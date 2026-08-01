@@ -38,14 +38,14 @@ const Contact = () => {
               No 211/1, Illukwatta,<br />
               Kadugannawa, Sri Lanka
             </p>
-            <Link 
-              to="https://maps.google.com/?q=Basnayaka+Furniture+Illukwatte"
+            <a 
+              href="https://maps.google.com/?q=Basnayaka+Furniture+Illukwatte"
               target="_blank"
               rel="noopener noreferrer"
               className="contact-link"
             >
               <i className="fas fa-map-pin"></i> Open in Google Maps
-            </Link>
+            </a>
           </div>
 
           {/* ===== WhatsApp Card ===== */}

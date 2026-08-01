@@ -37,7 +37,7 @@ const Navbar = () => {
         <header className="navbar-header">
             <div className="navbar-inner">
                 {/* ===== LOGO CARD – image + text side-by-side ===== */}
-                <div className="logo-card">
+                <Link to="/" className="logo-card">
                     <img
                         src="/assets/Basnayaka-logo.png"
                         alt="BFH Logo"
@@ -47,7 +47,7 @@ const Navbar = () => {
                         <span className="brand-name">Basnayaka</span>
                         <span className="brand-sub">Furniture House</span>
                     </div>
-                </div>
+                </Link>
 
                 {/* ===== NAVIGATION PILL ===== */}
                 <div className="nav-pill">
@@ -78,12 +78,12 @@ const Navbar = () => {
 
                     {/* Right: admin and cart icons */}
                     <div className="nav-right">
-                        <Link to="/admin" className="cart-link" title="Admin Dashboard">
-                            <i className="fas fa-user-shield"></i>
-                        </Link>
-                        <Link to="/cart" className="cart-link">
+                        <Link to="/cart" className="cart-link" title="Shopping Cart">
                             <i className="fas fa-shopping-cart"></i>
                             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+                        </Link>
+                        <Link to="/admin" className="cart-link" title="Admin Dashboard">
+                            <i className="fas fa-user-shield"></i>
                         </Link>
                     </div>
 

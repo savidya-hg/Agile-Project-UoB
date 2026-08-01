@@ -28,7 +28,7 @@ const Home = () => {
               <Link to="/browse" className="btn-primary">
                 <i className="fas fa-store"></i> Explore Collection
               </Link>
-              <Link to="/browse" className="btn-secondary">
+              <Link to="/browse?ai=true" className="btn-secondary">
                 <i className="fas fa-camera"></i> Upload Photo
               </Link>
             </div>
@@ -57,9 +57,7 @@ const Home = () => {
         </div>
       </section>
 
-     
-
-      {/* ===== CURATED SPACES (existing) ===== */}
+      {/* ===== CURATED SPACES ===== */}
       <section className="spaces-section">
         <div className="spaces-header">
           <h2>Curated Spaces</h2>
@@ -69,30 +67,30 @@ const Home = () => {
           </Link>
         </div>
         <div className="spaces-grid">
-          <div className="space-card animate-fade-up" style={{ backgroundImage: "url('/assets/living_room_scene.png')" }}>
+          <Link to="/browse?category=living-room" className="space-card animate-fade-up" style={{ backgroundImage: "url('/assets/living_room_scene.png')" }}>
             <div className="space-card-content">
               <h3>Living Room</h3>
               <p>The heart of your home, redefined.</p>
             </div>
-          </div>
-          <div className="space-card animate-fade-up delay-1" style={{ backgroundImage: "url('/assets/bedroom_scene.png')" }}>
+          </Link>
+          <Link to="/browse?category=bedroom" className="space-card animate-fade-up delay-1" style={{ backgroundImage: "url('/assets/bedroom_scene.png')" }}>
             <div className="space-card-content">
               <h3>Bedroom</h3>
               <p>Sanctuaries of serenity.</p>
             </div>
-          </div>
-          <div className="space-card animate-fade-up delay-2" style={{ backgroundImage: "url('/assets/dining_scene.png')" }}>
+          </Link>
+          <Link to="/browse?category=dining" className="space-card animate-fade-up delay-2" style={{ backgroundImage: "url('/assets/dining_scene.png')" }}>
             <div className="space-card-content">
               <h3>Dining</h3>
               <p>Gather and celebrate in style.</p>
             </div>
-          </div>
-          <div className="space-card animate-fade-up delay-3" style={{ backgroundImage: "url('/assets/office_scene.png')" }}>
+          </Link>
+          <Link to="/browse?category=office" className="space-card animate-fade-up delay-3" style={{ backgroundImage: "url('/assets/office_scene.png')" }}>
             <div className="space-card-content">
               <h3>Office</h3>
               <p>Productivity meets elegance.</p>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 

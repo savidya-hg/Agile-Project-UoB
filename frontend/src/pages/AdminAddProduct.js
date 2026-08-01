@@ -6,7 +6,7 @@ import './AdminAddProduct.css';
 
 const AdminAddProduct = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', price: '', description: '', category: '' });
+  const [form, setForm] = useState({ name: '', price: '', description: '', category: '', material: '' });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
@@ -56,58 +56,78 @@ const AdminAddProduct = () => {
       };
       await API.post('/products', productData);
 
-      alert('✅ Product added successfully!');
+      alert('Product added successfully!');
       navigate('/admin');
     } catch (err) {
       console.error(err);
-      alert('❌ Failed to add product: ' + err.message);
+      alert('Failed to add product: ' + err.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="add-product-container">
-      <h1>➕ Add New Product</h1>
-      <form onSubmit={handleSubmit} className="add-form">
-        <div className="form-group">
-          <label>Product Name *</label>
-          <input name="name" value={form.name} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Price (LKR) *</label>
-          <input name="price" type="number" value={form.price} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Description</label>
-          <textarea name="description" value={form.description} onChange={handleChange} rows="3" />
-        </div>
-        <div className="form-group">
-          <label>Category *</label>
-          <select 
-            name="category" 
-            value={form.category} 
-            onChange={handleChange} 
-            required
-            style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--border-color)', background: '#111', color: 'white' }}
-          >
-            <option value="">Select a Category</option>
-            <option value="Living Room">Living Room</option>
-            <option value="Bedroom">Bedroom</option>
-            <option value="Dining">Dining</option>
-            <option value="Office">Office</option>
-            <option value="Outdoor">Outdoor</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Product Image *</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} required />
-          {imagePreview && <img src={imagePreview} alt="Preview" className="preview-img" />}
-        </div>
-        <button type="submit" className="btn-primary" disabled={loading}>
-          {loading ? 'Processing AI Vector...' : 'Save Product'}
-        </button>
-      </form>
+    <div className="add-product-wrapper">
+      <div className="add-product-container">
+        <h1><i className="fas fa-plus-circle" style={{ color: '#c49a6c' }}></i> Add New Product</h1>
+        <form onSubmit={handleSubmit} className="add-form">
+          <div className="form-group">
+            <label>Product Name *</label>
+            <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="e.g. Sorensen Velvet Sectional Sofa" required />
+          </div>
+          <div className="form-group">
+            <label>Price (LKR) *</label>
+            <input type="number" name="price" value={form.price} onChange={handleChange} placeholder="e.g. 250000" required />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea name="description" value={form.description} onChange={handleChange} rows="3" placeholder="Enter product description..." />
+          </div>
+          <div className="form-group">
+            <label>Category *</label>
+            <select 
+              name="category" 
+              value={form.category} 
+              onChange={handleChange} 
+              required
+            >
+              <option value="">Select a Category</option>
+              <option value="Living Room">Living Room</option>
+              <option value="Bedroom">Bedroom</option>
+              <option value="Dining">Dining</option>
+              <option value="Office">Office</option>
+              <option value="Outdoor">Outdoor</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Material / Fabric *</label>
+            <select 
+              name="material" 
+              value={form.material} 
+              onChange={handleChange} 
+              required
+            >
+              <option value="">Select a Material</option>
+              <option value="Wood">Wood</option>
+              <option value="Oak">Oak</option>
+              <option value="Velvet">Velvet</option>
+              <option value="Leather">Leather</option>
+              <option value="Marble">Marble</option>
+              <option value="Glass">Glass</option>
+              <option value="Metal">Metal</option>
+              <option value="Fabric">Fabric</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Product Image *</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} required />
+            {imagePreview && <img src={imagePreview} alt="Preview" className="preview-img" />}
+          </div>
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? 'Processing AI Vector...' : 'Save Product'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

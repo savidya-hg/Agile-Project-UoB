@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../api/axiosConfig';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
   const [products, setProducts] = useState([]);
@@ -86,9 +88,9 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       <div className="admin-header">
-        <h1>📦 Manage Inventory</h1>
+        <h1><i className="fas fa-boxes-stacked" style={{ color: '#c49a6c', fontSize: '2rem' }}></i> Manage Inventory</h1>
         <div>
-          <button className="btn-primary" onClick={() => window.location.href='/admin/add'}>+ Add New</button>
+          <button className="btn-primary" onClick={() => navigate('/admin/add')}>+ Add New</button>
           <button className="btn-secondary" onClick={handleLogout} style={{marginLeft:'1rem'}}>Logout</button>
         </div>
       </div>
@@ -104,9 +106,9 @@ const AdminDashboard = () => {
               <div className="info">
                 <h3>{p.name}</h3>
                 <p className="price">Rs. {p.price}</p>
-                <p className="category">{p.category}</p>
+                <p className="category">{p.category} {p.material ? `• ${p.material}` : ''}</p>
                 <div className="actions">
-                  <button className="btn-edit" onClick={() => window.location.href=`/admin/edit/${p._id}`}>Edit</button>
+                  <button className="btn-edit" onClick={() => navigate(`/admin/edit/${p._id}`)}>Edit</button>
                   <button className="btn-delete" onClick={() => handleDelete(p._id)}>Delete</button>
                 </div>
               </div>
