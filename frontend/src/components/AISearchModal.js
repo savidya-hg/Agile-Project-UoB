@@ -81,7 +81,7 @@ const AISearchModal = ({ onClose }) => {
   return (
     <div className="ai-modal-backdrop" onClick={onClose}>
       <div className="ai-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="ai-modal-close" onClick={onClose}>✕</button>
+        <button className="ai-modal-close" onClick={onClose}><i className="fas fa-times"></i></button>
 
         <div className="ai-modal-header">
           <h2>AI Visual Search</h2>

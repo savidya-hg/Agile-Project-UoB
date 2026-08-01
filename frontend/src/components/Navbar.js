@@ -37,7 +37,7 @@ const Navbar = () => {
         <header className="navbar-header">
             <div className="navbar-inner">
                 {/* ===== LOGO CARD – image + text side-by-side ===== */}
-                <div className="logo-card">
+                <Link to="/" className="logo-card">
                     <img
                         src="/assets/Basnayaka-logo.png"
                         alt="BFH Logo"
@@ -47,7 +47,7 @@ const Navbar = () => {
                         <span className="brand-name">Basnayaka</span>
                         <span className="brand-sub">Furniture House</span>
                     </div>
-                </div>
+                </Link>
 
                 {/* ===== NAVIGATION PILL ===== */}
                 <div className="nav-pill">
