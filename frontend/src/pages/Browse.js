@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import API from "../api/axiosConfig";
 import AISearchModal from "../components/AISearchModal";
+import ProductDetailsModal from "../components/ProductDetailsModal";
 import { useCart } from "../context/CartContext";
 import "./Browse.css";
 
@@ -78,6 +79,7 @@ const Browse = () => {
   const [selectedMaterial, setSelectedMaterial] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
   const [showAISearchModal, setShowAISearchModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const { addToCart } = useCart();
 
@@ -357,50 +359,69 @@ const Browse = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProducts.map((product) => (
                   <article 
-                    className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300 group"
+                    className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-stone-200/70 shadow-xs hover:shadow-xl hover:-translate-y-1.5 hover:scale-[1.02] transition-all duration-300 group cursor-pointer"
                     key={product._id || product.id}
                   >
-                    {/* Fixed height image wrapper */}
-                    <div className="h-64 w-full overflow-hidden relative bg-stone-50">
+                    {/* Fixed height image wrapper with dark overlay & View Details button on hover */}
+                    <div 
+                      className="h-64 w-full overflow-hidden relative bg-stone-50"
+                      onClick={() => setSelectedProduct(product)}
+                    >
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
-                        className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <span className="absolute top-4 left-4 px-2.5 py-1 text-[9px] font-bold bg-white/90 text-stone-800 rounded-full tracking-wider uppercase backdrop-blur-xs shadow-xs">
+                      
+                      {/* Category Badge */}
+                      <span className="absolute top-4 left-4 z-10 px-3 py-1 text-[10px] font-bold bg-white/90 text-stone-800 rounded-full tracking-wider uppercase backdrop-blur-md shadow-xs">
                         {product.category}
                       </span>
+
+                      {/* Dark overlay + Centered View Details Button */}
+                      <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 z-20">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProduct(product);
+                          }}
+                          className="px-5 py-2.5 bg-white text-stone-900 font-semibold text-xs rounded-full shadow-lg hover:bg-[#c19571] hover:text-white transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-2"
+                        >
+                          <i className="fas fa-eye"></i>
+                          View Details
+                        </button>
+                      </div>
                     </div>
 
-                    {/* Content area with flex-grow to align card bottoms */}
-                    <div className="p-5 flex flex-col flex-grow justify-between">
+                    {/* Content area */}
+                    <div className="p-5 flex flex-col flex-grow justify-between bg-white">
                       <div>
-                        <h3 className="font-bold text-base text-stone-900 tracking-tight line-clamp-2 min-h-[3rem] leading-snug">
+                        <h3 
+                          onClick={() => setSelectedProduct(product)}
+                          className="font-bold text-base text-stone-900 tracking-tight line-clamp-2 leading-snug hover:text-[#c19571] transition-colors"
+                        >
                           {product.name}
                         </h3>
                         
-                        <div className="mt-2 flex items-center justify-between">
-                          <span className="text-sm font-medium text-stone-500">
+                        <div className="mt-3 flex items-center justify-between">
+                          <span className="text-xs font-semibold text-stone-500 bg-stone-100 px-2.5 py-1 rounded-md">
                             {product.material || "Wood"}
                           </span>
-                          <strong className="text-[#c19571] font-extrabold text-sm tracking-wide">
+                          <strong className="text-[#c19571] font-extrabold text-base tracking-wide">
                             Rs. {Number(product.price || 0).toLocaleString()}
                           </strong>
                         </div>
-
-                        {/* Description block with min-height and line-clamp to align button heights */}
-                        <p className="flex-grow text-xs text-stone-500 line-clamp-2 my-2 min-h-[2.5rem] leading-relaxed font-light">
-                          {product.description || "Indulge in modern luxury and supreme comfort with BFH curated furniture pieces."}
-                        </p>
                       </div>
 
-                      {/* Add to Cart button pushed to the absolute bottom */}
+                      {/* Add to Cart button */}
                       <button
                         type="button"
                         onClick={() => handleAddToCart(product)}
-                        className="mt-auto w-full py-2.5 rounded-xl border border-stone-300 font-medium text-stone-800 hover:bg-[#c19571] hover:text-white transition-all duration-300 focus:outline-none"
+                        className="mt-5 w-full py-2.5 rounded-xl border border-stone-300 font-medium text-sm text-stone-800 hover:bg-[#c19571] hover:border-[#c19571] hover:text-white transition-all duration-300 focus:outline-none flex items-center justify-center gap-2 shadow-xs"
                       >
+                        <i className="fas fa-shopping-cart text-xs"></i>
                         Add to Cart
                       </button>
                     </div>
@@ -414,6 +435,14 @@ const Browse = () => {
 
         </div>
       </div>
+
+      {/* Product Details Modal */}
+      {selectedProduct && (
+        <ProductDetailsModal 
+          product={selectedProduct} 
+          onClose={() => setSelectedProduct(null)} 
+        />
+      )}
 
       {/* AI Search Popup Modal */}
       {showAISearchModal && (
