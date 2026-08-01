@@ -76,8 +76,11 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Right: cart only (social removed) */}
+                    {/* Right: admin and cart icons */}
                     <div className="nav-right">
+                        <Link to="/admin" className="cart-link" title="Admin Dashboard">
+                            <i className="fas fa-user-shield"></i>
+                        </Link>
                         <Link to="/cart" className="cart-link">
                             <i className="fas fa-shopping-cart"></i>
                             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
