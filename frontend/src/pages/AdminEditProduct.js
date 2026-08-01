@@ -13,7 +13,8 @@ const AdminEditProduct = () => {
     name: '', 
     price: '', 
     description: '', 
-    category: '' 
+    category: '',
+    material: ''
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -29,7 +30,8 @@ const AdminEditProduct = () => {
           name: product.name,
           price: product.price,
           description: product.description || '',
-          category: product.category || ''
+          category: product.category || '',
+          material: product.material || ''
         });
         setCurrentImage(product.imageUrl);
         setImagePreview(product.imageUrl);
@@ -87,8 +89,7 @@ const AdminEditProduct = () => {
         await new Promise((resolve) => { img.onload = resolve; });
         vector = await getImageVector(img);
       } else {
-        // Keep existing vector (or we could recompute from existing image)
-        // For simplicity, we'll keep the existing vector
+        // Keep existing vector
         const existingRes = await API.get(`/products/${id}`);
         vector = existingRes.data.vector || [];
       }
@@ -102,11 +103,11 @@ const AdminEditProduct = () => {
       };
       await API.put(`/products/${id}`, productData);
 
-      alert('✅ Product updated successfully!');
+      alert('Product updated successfully!');
       navigate('/admin');
     } catch (err) {
       console.error(err);
-      alert('❌ Failed to update product: ' + err.message);
+      alert('Failed to update product: ' + err.message);
     } finally {
       setSaving(false);
     }
@@ -115,76 +116,97 @@ const AdminEditProduct = () => {
   if (loading) return <div className="loading">Loading product...</div>;
 
   return (
-    <div className="add-product-container">
-      <h1>✏️ Edit Product</h1>
-      <form onSubmit={handleSubmit} className="add-form">
-        <div className="form-group">
-          <label>Product Name *</label>
-          <input name="name" value={form.name} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Price (LKR) *</label>
-          <input name="price" type="number" value={form.price} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label>Description</label>
-          <textarea name="description" value={form.description} onChange={handleChange} rows="3" />
-        </div>
-        <div className="form-group">
-          <label>Category *</label>
-          <select 
-            name="category" 
-            value={form.category} 
-            onChange={handleChange} 
-            required
-            style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid var(--border-color)', background: '#111', color: 'white' }}
-          >
-            <option value="">Select a Category</option>
-            <option value="Living Room">Living Room</option>
-            <option value="Bedroom">Bedroom</option>
-            <option value="Dining">Dining</option>
-            <option value="Office">Office</option>
-            <option value="Outdoor">Outdoor</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Product Image</label>
-          {imagePreview && (
-            <div>
-              <img src={imagePreview} alt="Preview" className="preview-img" />
-              <button 
-                type="button" 
-                onClick={() => {
-                  setImagePreview(currentImage);
-                  setImageFile(null);
-                }}
-                className="btn-secondary" 
-                style={{ marginTop: '0.5rem' }}
-              >
-                Revert to original
-              </button>
-            </div>
-          )}
-          <input 
-            type="file" 
-            accept="image/*" 
-            onChange={handleImageChange} 
-            style={{ marginTop: '0.5rem' }}
-          />
-          <p className="hint">Upload a new image to replace the current one (optional)</p>
-        </div>
-        <button type="submit" className="btn-primary" disabled={saving}>
-          {saving ? 'Updating...' : 'Update Product'}
-        </button>
-        <button 
-          type="button" 
-          onClick={() => navigate('/admin')} 
-          className="btn-secondary"
-          style={{ marginLeft: '1rem' }}
-        >
-          Cancel
-        </button>
-      </form>
+    <div className="add-product-wrapper">
+      <div className="add-product-container">
+        <h1><i className="fas fa-pen-to-square" style={{ color: '#c49a6c' }}></i> Edit Product</h1>
+        <form onSubmit={handleSubmit} className="add-form">
+          <div className="form-group">
+            <label>Product Name *</label>
+            <input type="text" name="name" value={form.name} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Price (LKR) *</label>
+            <input type="number" name="price" value={form.price} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea name="description" value={form.description} onChange={handleChange} rows="3" />
+          </div>
+          <div className="form-group">
+            <label>Category *</label>
+            <select 
+              name="category" 
+              value={form.category} 
+              onChange={handleChange} 
+              required
+            >
+              <option value="">Select a Category</option>
+              <option value="Living Room">Living Room</option>
+              <option value="Bedroom">Bedroom</option>
+              <option value="Dining">Dining</option>
+              <option value="Office">Office</option>
+              <option value="Outdoor">Outdoor</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Material / Fabric *</label>
+            <select 
+              name="material" 
+              value={form.material} 
+              onChange={handleChange} 
+              required
+            >
+              <option value="">Select a Material</option>
+              <option value="Wood">Wood</option>
+              <option value="Oak">Oak</option>
+              <option value="Velvet">Velvet</option>
+              <option value="Leather">Leather</option>
+              <option value="Marble">Marble</option>
+              <option value="Glass">Glass</option>
+              <option value="Metal">Metal</option>
+              <option value="Fabric">Fabric</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Product Image</label>
+            {imagePreview && (
+              <div>
+                <img src={imagePreview} alt="Preview" className="preview-img" />
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setImagePreview(currentImage);
+                    setImageFile(null);
+                  }}
+                  className="btn-secondary" 
+                  style={{ marginTop: '0.5rem', display: 'block' }}
+                >
+                  Revert to original
+                </button>
+              </div>
+            )}
+            <input 
+              type="file" 
+              accept="image/*" 
+              onChange={handleImageChange} 
+              style={{ marginTop: '0.5rem' }}
+            />
+            <p className="hint">Upload a new image to replace the current one (optional)</p>
+          </div>
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+            <button type="submit" className="btn-primary" disabled={saving}>
+              {saving ? 'Updating...' : 'Update Product'}
+            </button>
+            <button 
+              type="button" 
+              onClick={() => navigate('/admin')} 
+              className="btn-secondary"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

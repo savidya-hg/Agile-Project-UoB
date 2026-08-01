@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import API from "../api/axiosConfig";
-import AIUploader from "../components/AIUploader";
+import AISearchModal from "../components/AISearchModal";
 import { useCart } from "../context/CartContext";
+import "./Browse.css";
 
 const fallbackProducts = [
   {
@@ -71,18 +72,17 @@ const Browse = () => {
   const location = useLocation();
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchResults, setSearchResults] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [maxPrice, setMaxPrice] = useState(1000000);
-  const [selectedColor, setSelectedColor] = useState("All");
+  const [selectedMaterial, setSelectedMaterial] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
-  const [aiEnabled, setAiEnabled] = useState(false);
+  const [showAISearchModal, setShowAISearchModal] = useState(false);
 
   const { addToCart } = useCart();
 
-  const categoriesList = ["Living Room", "Dining", "Office", "Bedroom"];
-  const colorsList = ["All", "Black", "White", "Grey", "Purple", "Brown", "Oak", "Velvet", "Leather"];
+  const categoriesList = ["Living Room", "Dining", "Office", "Bedroom", "Outdoor"];
+  const materialsList = ["All", "Wood", "Oak", "Velvet", "Leather", "Marble", "Glass", "Metal", "Fabric"];
 
   // Fetch products from API on mount
   useEffect(() => {
@@ -105,14 +105,14 @@ const Browse = () => {
     fetchProducts();
   }, []);
 
-  // Handle category updates from URL search query
+  // Handle category & AI modal updates from URL search query
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const urlCategory = params.get("category");
     const aiParam = params.get("ai");
 
     if (aiParam === "true") {
-      setAiEnabled(true);
+      setShowAISearchModal(true);
     }
 
     if (urlCategory) {
@@ -133,11 +133,6 @@ const Browse = () => {
   const filteredProducts = useMemo(() => {
     let list = allProducts.length > 0 ? allProducts : fallbackProducts;
 
-    // AI recommendation list
-    if (searchResults && searchResults.length > 0) {
-      list = searchResults;
-    }
-
     // Text search
     if (searchTerm.trim()) {
       const lower = searchTerm.toLowerCase();
@@ -156,10 +151,10 @@ const Browse = () => {
     // Price range
     list = list.filter((p) => Number(p.price || 0) <= maxPrice);
 
-    // Color/Material tags
-    if (selectedColor !== "All") {
+    // Material tags
+    if (selectedMaterial !== "All") {
       list = list.filter((p) =>
-        `${p.color || ""} ${p.material || ""}`.toLowerCase().includes(selectedColor.toLowerCase())
+        `${p.material || ""} ${p.color || ""}`.toLowerCase().includes(selectedMaterial.toLowerCase())
       );
     }
 
@@ -175,7 +170,7 @@ const Browse = () => {
     }
 
     return sorted;
-  }, [allProducts, searchResults, searchTerm, selectedCategories, maxPrice, selectedColor, sortBy]);
+  }, [allProducts, searchTerm, selectedCategories, maxPrice, selectedMaterial, sortBy]);
 
   const handleCategoryCheckbox = (cat) => {
     if (selectedCategories.includes(cat)) {
@@ -183,18 +178,6 @@ const Browse = () => {
     } else {
       setSelectedCategories([...selectedCategories, cat]);
     }
-    setSearchResults(null);
-  };
-
-  const handleAISearch = (results) => {
-    if (results && results.length > 0) {
-      setSearchResults(results);
-      setSearchTerm("");
-      setSelectedCategories([]);
-      setSelectedColor("All");
-      return;
-    }
-    setSearchResults(null);
   };
 
   const handleAddToCart = (product) => {
@@ -211,28 +194,41 @@ const Browse = () => {
   }
 
   return (
-    <div className="bg-[#FAF9F6] min-h-screen font-sans pt-8">
+    <div className="browse-page min-h-screen font-sans">
       
+      {/* ===== HERO BANNER SECTION (Matching Home & Contact pages) ===== */}
+      <section className="browse-hero" style={{ backgroundImage: "url('/assets/hero-img.png')" }}>
+        <div className="browse-hero-overlay">
+          <div className="browse-hero-content animate-fade-up">
+            <span className="browse-hero-badge">BFH Exclusive Catalog</span>
+            <h1 className="browse-hero-title">Browse Our Collection</h1>
+            <p className="browse-hero-subtitle">
+              Explore handcrafted furniture designed with premium materials and timeless style.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 pb-24">
+
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
-          {/* Left Column: Redesigned Filter Sidebar */}
-          <aside className="w-full lg:w-64 flex-shrink-0 bg-white rounded-2xl p-6 shadow-sm border border-stone-200">
+          {/* Left Column: Clean Filter Sidebar */}
+          <aside className="w-full lg:w-64 flex-shrink-0 bg-white rounded-2xl p-6 shadow-sm border border-stone-200 lg:sticky lg:top-36">
             
-            {/* Filter Title */}
+            {/* Filter Header */}
             <div className="flex items-center justify-between pb-4 border-b border-stone-100 mb-6">
-              <h2 className="text-lg font-bold text-stone-900">Filters</h2>
-              {(selectedCategories.length > 0 || maxPrice < 1000000 || selectedColor !== "All" || searchTerm !== "") && (
+              <h2 className="text-base font-bold text-stone-900 tracking-wide uppercase">Filters</h2>
+              {(selectedCategories.length > 0 || maxPrice < 1000000 || selectedMaterial !== "All" || searchTerm !== "") && (
                 <button
                   onClick={() => {
                     setSelectedCategories([]);
                     setMaxPrice(1000000);
-                    setSelectedColor("All");
+                    setSelectedMaterial("All");
                     setSearchTerm("");
-                    setSearchResults(null);
                   }}
-                  className="text-xs text-[#c19571] hover:text-[#a07450] font-semibold"
+                  className="text-xs text-[#c19571] hover:text-[#a07450] font-semibold transition-colors"
                 >
                   Clear All
                 </button>
@@ -246,49 +242,27 @@ const Browse = () => {
                 type="text"
                 placeholder="Search collection..."
                 value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setSearchResults(null);
-                }}
-                className="w-full px-3.5 py-2 text-sm bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 text-stone-900"
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-3.5 py-2.5 text-sm bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#c19571] text-stone-900 placeholder:text-stone-400 transition-colors mb-2.5"
               />
+
+              {/* Single Clean Upload Photo Button */}
+              <button
+                type="button"
+                onClick={() => setShowAISearchModal(true)}
+                className="w-full py-2.5 px-4 rounded-xl border border-stone-200 bg-white hover:border-[#c19571] hover:bg-[#c19571] text-stone-700 hover:text-white text-xs font-semibold tracking-wide transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs group"
+              >
+                <i className="fas fa-camera text-[#c19571] group-hover:text-white transition-colors"></i>
+                <span>Upload a Photo</span>
+              </button>
             </div>
 
-            {/* AI Search Section */}
-            <div className="mb-6 p-4 bg-stone-50 rounded-xl border border-stone-150">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-stone-700 tracking-wide uppercase">AI Search Helper</span>
-                <button
-                  onClick={() => setAiEnabled(!aiEnabled)}
-                  className={`w-8 h-4 rounded-full transition-colors relative focus:outline-none ${aiEnabled ? 'bg-[#c19571]' : 'bg-stone-300'}`}
-                >
-                  <span className={`w-3.5 h-3.5 rounded-full bg-white absolute top-0.25 transition-transform ${aiEnabled ? 'translate-x-4' : 'translate-x-0.5'}`} />
-                </button>
-              </div>
-              {aiEnabled && (
-                <div className="mt-2 space-y-2">
-                  <p className="text-[11px] text-stone-600 leading-relaxed font-light">
-                    Upload an image to scan our luxury catalog for visually matching furniture.
-                  </p>
-                  <AIUploader products={allProducts} onSearchResults={handleAISearch} />
-                  {searchResults && (
-                    <button
-                      onClick={() => handleAISearch(null)}
-                      className="w-full py-1.5 text-xs font-bold bg-[#c19571] text-white rounded-lg hover:bg-[#a07450] transition-colors mt-2"
-                    >
-                      Clear AI Filter
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* CATEGORY (Checkboxes with accent colors) */}
+            {/* CATEGORY */}
             <div className="mb-6">
-              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">CATEGORY</h3>
+              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">Category</h3>
               <div className="space-y-2.5">
                 {categoriesList.map((cat) => (
-                  <label key={cat} className="flex items-center space-x-2.5 cursor-pointer text-sm text-stone-600 hover:text-stone-900">
+                  <label key={cat} className="flex items-center space-x-2.5 cursor-pointer text-sm text-stone-600 hover:text-stone-900 transition-colors">
                     <input
                       type="checkbox"
                       checked={selectedCategories.includes(cat)}
@@ -305,17 +279,14 @@ const Browse = () => {
 
             {/* PRICE RANGE */}
             <div className="mb-6">
-              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">PRICE RANGE</h3>
+              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">Price Range</h3>
               <input
                 type="range"
                 min="0"
                 max="1000000"
                 step="50000"
                 value={maxPrice}
-                onChange={(e) => {
-                  setMaxPrice(Number(e.target.value));
-                  setSearchResults(null);
-                }}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
                 className="w-full accent-[#c19571] cursor-pointer"
               />
               <div className="flex justify-between text-xs text-stone-500 font-medium mt-2">
@@ -328,22 +299,20 @@ const Browse = () => {
 
             {/* MATERIAL */}
             <div>
-              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">MATERIAL</h3>
+              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">Material</h3>
               <div className="flex flex-wrap gap-1.5">
-                {colorsList.map((color) => (
+                {materialsList.map((mat) => (
                   <button
-                    key={color}
-                    onClick={() => {
-                      setSelectedColor(color);
-                      setSearchResults(null);
-                    }}
-                    className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
-                      selectedColor === color
-                        ? "bg-[#c19571] text-white"
+                    key={mat}
+                    type="button"
+                    onClick={() => setSelectedMaterial(mat)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer ${
+                      selectedMaterial === mat
+                        ? "bg-[#c19571] text-white shadow-xs"
                         : "bg-stone-100 text-stone-700 hover:bg-stone-200"
                     }`}
                   >
-                    {color}
+                    {mat}
                   </button>
                 ))}
               </div>
@@ -389,7 +358,7 @@ const Browse = () => {
                 {filteredProducts.map((product) => (
                   <article 
                     className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-stone-100 shadow-sm hover:shadow-md transition-all duration-300 group"
-                    key={product._id}
+                    key={product._id || product.id}
                   >
                     {/* Fixed height image wrapper */}
                     <div className="h-64 w-full overflow-hidden relative bg-stone-50">
@@ -445,6 +414,11 @@ const Browse = () => {
 
         </div>
       </div>
+
+      {/* AI Search Popup Modal */}
+      {showAISearchModal && (
+        <AISearchModal onClose={() => setShowAISearchModal(false)} />
+      )}
 
     </div>
   );
