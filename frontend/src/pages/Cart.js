@@ -21,10 +21,10 @@ const Cart = () => {
 
   // Generate WhatsApp message
   const generateWhatsAppMessage = () => {
-    let message = '🪑 *NEW ORDER FROM BFH*\n\n';
-    message += `👤 *Customer:* ${customerName}\n`;
-    message += `📱 *Phone:* ${phoneNumber}\n`;
-    message += `📅 *Delivery Date:* ${deliveryDate}\n\n`;
+    let message = '*NEW ORDER FROM BFH*\n\n';
+    message += `*Customer:* ${customerName}\n`;
+    message += `*Phone:* ${phoneNumber}\n`;
+    message += `*Delivery Date:* ${deliveryDate}\n\n`;
     message += `*ITEMS ORDERED:*\n`;
     message += `─────────────────\n\n`;
 
@@ -36,7 +36,7 @@ const Cart = () => {
 
     message += `─────────────────\n`;
     message += `*TOTAL: ${formatPrice(totalPrice)}*\n\n`;
-    message += `Thank you for your order! 🙏`;
+    message += `Thank you for your order!`;
 
     return message;
   };
@@ -63,8 +63,8 @@ const Cart = () => {
 
     setIsSending(true);
 
-    // Client's WhatsApp number (replace with actual number)
-    const clientPhone = '947XXXXXXXXX'; // Replace with client's number
+    // Client's WhatsApp number
+    const clientPhone = '94773132443';
     const message = generateWhatsAppMessage();
     const encodedMessage = encodeURIComponent(message);
 
@@ -76,7 +76,7 @@ const Cart = () => {
     setIsSending(false);
 
     // Show success message
-    alert('✅ Order sent via WhatsApp! The shop will contact you shortly.');
+    alert('Order sent via WhatsApp! The shop will contact you shortly.');
     navigate('/');
   };
 
