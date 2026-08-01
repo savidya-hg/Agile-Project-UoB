@@ -78,12 +78,12 @@ const Navbar = () => {
 
                     {/* Right: admin and cart icons */}
                     <div className="nav-right">
-                        <Link to="/admin" className="cart-link" title="Admin Dashboard">
-                            <i className="fas fa-user-shield"></i>
-                        </Link>
-                        <Link to="/cart" className="cart-link">
+                        <Link to="/cart" className="cart-link" title="Shopping Cart">
                             <i className="fas fa-shopping-cart"></i>
                             {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+                        </Link>
+                        <Link to="/admin" className="cart-link" title="Admin Dashboard">
+                            <i className="fas fa-user-shield"></i>
                         </Link>
                     </div>
 

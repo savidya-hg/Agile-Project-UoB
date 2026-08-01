@@ -12,6 +12,9 @@ const AISearchModal = ({ onClose }) => {
   const [matches, setMatches] = useState([]);
   const [error, setError] = useState('');
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const categoriesList = ["Living Room", "Dining", "Office", "Bedroom", "Outdoor"];
+
   // Fetch all products on mount to perform similarity search
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,6 +30,11 @@ const AISearchModal = ({ onClose }) => {
   }, []);
 
   const handleImageUpload = async (e) => {
+    if (!selectedCategory) {
+      setError("Please select a category first before uploading an image.");
+      return;
+    }
+
     const file = e.target.files[0];
     if (!file) return;
 
@@ -44,8 +52,10 @@ const AISearchModal = ({ onClose }) => {
       // 2. Get AI vector for the uploaded image
       const userVector = await getImageVector(img);
 
-      // 3. Compare with all products in the database
-      const results = products.map(product => {
+      // 3. Filter products by selected category and compare
+      const categoryProducts = products.filter(p => p.category === selectedCategory);
+      
+      const results = categoryProducts.map(product => {
         if (!product.vector || product.vector.length === 0) {
           return { ...product, similarity: 0 };
         }
@@ -93,8 +103,24 @@ const AISearchModal = ({ onClose }) => {
         <div className="ai-modal-body">
           {/* UPLOAD & PREVIEW AREA */}
           <div className="ai-modal-upload-section">
+            <div className="ai-modal-category-select">
+              <label>Select Category to Search In *</label>
+              <select 
+                value={selectedCategory}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setError(""); // Clear error when they select
+                }}
+              >
+                <option value="">-- Choose Category --</option>
+                {categoriesList.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </div>
+
             {!preview ? (
-              <div className="ai-modal-upload-box">
+              <div className={`ai-modal-upload-box ${!selectedCategory ? 'disabled' : ''}`}>
                 <label htmlFor="ai-modal-upload-input" className="ai-modal-upload-label">
                   <div className="ai-modal-upload-icon"><ion-icon name="image-outline"></ion-icon></div>
                   <span>Drop or select a photo of furniture</span>
@@ -106,6 +132,7 @@ const AISearchModal = ({ onClose }) => {
                   accept="image/*"
                   onChange={handleImageUpload}
                   style={{ display: 'none' }}
+                  disabled={!selectedCategory}
                 />
               </div>
             ) : (
