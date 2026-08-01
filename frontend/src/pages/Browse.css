@@ -343,6 +343,64 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .browse-body {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .browse-hero-overlay {
+    padding: 140px 1rem 60px;
+  }
+  .browse-hero-title {
+    font-size: 2.2rem;
+  }
+  .browse-hero-subtitle {
+    font-size: 0.95rem;
+  }
+  .browse-sidebar {
+    padding: 1.2rem;
+  }
+  .grid-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .grid-sort {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .sort-select {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .browse-body {
+    padding: 1rem 0.75rem 2.5rem;
+  }
+  .browse-hero-overlay {
+    padding: 120px 0.75rem 40px;
+    min-height: 300px;
+  }
+  .browse-hero-title {
+    font-size: 1.8rem;
+  }
+  .browse-hero-badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.9rem;
+  }
+  .sidebar-header {
+    margin-bottom: 1rem;
+  }
+  .sidebar-section {
+    margin-bottom: 1rem;
+  }
+  .no-items-box {
+    padding: 2.5rem 1rem;
+  }
+  .card-image-wrapper {
+    height: 220px;
+  }
+}
+
 /* ----- LOADING STATE ----- */
 .browse-loading {
   min-height: 100vh;
