@@ -189,16 +189,16 @@ const Browse = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center text-stone-500 font-light text-lg">
+      <div className="browse-loading">
         Loading luxury furniture collection...
       </div>
     );
   }
 
   return (
-    <div className="browse-page min-h-screen font-sans">
-      
-      {/* ===== HERO BANNER SECTION (Matching Home & Contact pages) ===== */}
+    <div className="browse-page">
+
+      {/* ===== HERO BANNER SECTION ===== */}
       <section className="browse-hero" style={{ backgroundImage: "url('/assets/hero-img.png')" }}>
         <div className="browse-hero-overlay">
           <div className="browse-hero-content animate-fade-up">
@@ -212,16 +212,15 @@ const Browse = () => {
       </section>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 pb-24">
+      <div className="browse-body">
+        <div className="browse-body-inner">
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          
-          {/* Left Column: Clean Filter Sidebar */}
-          <aside className="w-full lg:w-64 flex-shrink-0 bg-white rounded-2xl p-6 shadow-sm border border-stone-200 lg:sticky lg:top-36">
-            
+          {/* Left Column: Filter Sidebar */}
+          <aside className="browse-sidebar">
+
             {/* Filter Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-stone-100 mb-6">
-              <h2 className="text-base font-bold text-stone-900 tracking-wide uppercase">Filters</h2>
+            <div className="sidebar-header">
+              <h2 className="sidebar-title">Filters</h2>
               {(selectedCategories.length > 0 || maxPrice < 1000000 || selectedMaterial !== "All" || searchTerm !== "") && (
                 <button
                   onClick={() => {
@@ -230,7 +229,7 @@ const Browse = () => {
                     setSelectedMaterial("All");
                     setSearchTerm("");
                   }}
-                  className="text-xs text-[#c19571] hover:text-[#a07450] font-semibold transition-colors"
+                  className="sidebar-clear-btn"
                 >
                   Clear All
                 </button>
@@ -238,40 +237,40 @@ const Browse = () => {
             </div>
 
             {/* Search Input */}
-            <div className="mb-6">
-              <h3 className="text-xs font-bold text-stone-400 tracking-wider uppercase mb-3">Search</h3>
+            <div className="sidebar-section">
+              <h3 className="sidebar-label">Search</h3>
               <input
                 type="text"
                 placeholder="Search collection..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-sm bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-[#c19571] text-stone-900 placeholder:text-stone-400 transition-colors mb-2.5"
+                className="sidebar-search-input"
               />
 
-              {/* Single Clean Upload Photo Button */}
+              {/* Upload Photo Button */}
               <button
                 type="button"
                 onClick={() => setShowAISearchModal(true)}
-                className="w-full py-2.5 px-4 rounded-xl border border-stone-200 bg-white hover:border-[#c19571] hover:bg-[#c19571] text-stone-700 hover:text-white text-xs font-semibold tracking-wide transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs group"
+                className="sidebar-upload-btn"
               >
-                <i className="fas fa-camera text-[#c19571] group-hover:text-white transition-colors"></i>
+                <i className="fas fa-camera sidebar-upload-icon"></i>
                 <span>Upload a Photo</span>
               </button>
             </div>
 
             {/* CATEGORY */}
-            <div className="mb-6">
-              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">Category</h3>
-              <div className="space-y-2.5">
+            <div className="sidebar-section">
+              <h3 className="sidebar-label">Category</h3>
+              <div className="sidebar-checkbox-group">
                 {categoriesList.map((cat) => (
-                  <label key={cat} className="flex items-center space-x-2.5 cursor-pointer text-sm text-stone-600 hover:text-stone-900 transition-colors">
+                  <label key={cat} className="sidebar-checkbox-label">
                     <input
                       type="checkbox"
                       checked={selectedCategories.includes(cat)}
                       onChange={() => handleCategoryCheckbox(cat)}
-                      className="w-4 h-4 rounded border-stone-350 text-[#c19571] focus:ring-[#c19571] accent-[#c19571]"
+                      className="sidebar-checkbox"
                     />
-                    <span className={selectedCategories.includes(cat) ? "font-semibold text-stone-900" : "font-normal text-stone-600"}>
+                    <span className={selectedCategories.includes(cat) ? "active" : ""}>
                       {cat}
                     </span>
                   </label>
@@ -280,8 +279,8 @@ const Browse = () => {
             </div>
 
             {/* PRICE RANGE */}
-            <div className="mb-6">
-              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">Price Range</h3>
+            <div className="sidebar-section">
+              <h3 className="sidebar-label">Price Range</h3>
               <input
                 type="range"
                 min="0"
@@ -289,30 +288,24 @@ const Browse = () => {
                 step="50000"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-[#c19571] cursor-pointer"
+                className="sidebar-range"
               />
-              <div className="flex justify-between text-xs text-stone-500 font-medium mt-2">
+              <div className="sidebar-range-labels">
                 <span>Rs. 0</span>
-                <span className="text-[#c19571] font-semibold">
-                  Rs. {maxPrice.toLocaleString()}
-                </span>
+                <span className="price-highlight">Rs. {maxPrice.toLocaleString()}</span>
               </div>
             </div>
 
             {/* MATERIAL */}
-            <div>
-              <h3 className="text-xs font-bold text-stone-900 tracking-wider uppercase mb-3">Material</h3>
-              <div className="flex flex-wrap gap-1.5">
+            <div className="sidebar-section-last">
+              <h3 className="sidebar-label">Material</h3>
+              <div className="sidebar-material-tags">
                 {materialsList.map((mat) => (
                   <button
                     key={mat}
                     type="button"
                     onClick={() => setSelectedMaterial(mat)}
-                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer ${
-                      selectedMaterial === mat
-                        ? "bg-[#c19571] text-white shadow-xs"
-                        : "bg-stone-100 text-stone-700 hover:bg-stone-200"
-                    }`}
+                    className={`material-tag ${selectedMaterial === mat ? "active" : ""}`}
                   >
                     {mat}
                   </button>
@@ -323,19 +316,19 @@ const Browse = () => {
           </aside>
 
           {/* Right Column: Product Grid */}
-          <main className="flex-grow w-full">
-            
-            {/* Grid Header Actions */}
-            <div className="flex flex-col sm:flex-row items-center justify-between pb-6 border-b border-stone-200 mb-8 gap-4">
-              <span className="text-xs font-semibold text-stone-500 tracking-wider uppercase">
+          <main className="browse-main">
+
+            {/* Grid Header */}
+            <div className="grid-header">
+              <span className="grid-count">
                 Showing {filteredProducts.length} Premium Items
               </span>
-              <div className="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-start">
-                <span className="text-xs text-stone-400 font-medium">Sort By:</span>
+              <div className="grid-sort">
+                <span className="sort-label">Sort By:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 py-2 text-xs bg-white border border-stone-200 rounded-xl focus:outline-none focus:border-stone-400 text-stone-700 font-semibold"
+                  className="sort-select"
                 >
                   <option value="newest">Newest Arrivals</option>
                   <option value="price-low">Price: Low to High</option>
@@ -346,86 +339,51 @@ const Browse = () => {
 
             {/* Product Cards Grid */}
             {filteredProducts.length === 0 ? (
-              <div className="bg-white rounded-2xl p-16 text-center shadow-sm border border-stone-100">
-                <svg className="w-12 h-12 text-stone-300 mx-auto mb-4" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+              <div className="no-items-box">
+                <svg className="no-items-icon" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
                 </svg>
-                <h3 className="text-lg font-bold text-stone-900">No items found</h3>
-                <p className="text-stone-500 text-sm mt-1.5 font-light">
+                <h3 className="no-items-title">No items found</h3>
+                <p className="no-items-text">
                   Try adjusting your sidebar filters or clearing your search term.
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="bfh-product-grid">
                 {filteredProducts.map((product) => (
-                  <article 
-                    className="flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-stone-200/70 shadow-xs hover:shadow-xl hover:-translate-y-1.5 hover:scale-[1.02] transition-all duration-300 group cursor-pointer"
+                  <article
+                    className="bfh-product-card"
                     key={product._id || product.id}
+                    onClick={() => setSelectedProduct(product)}
                   >
-                    {/* Fixed height image wrapper with dark overlay & View Details button on hover */}
-                    <div 
-                      className="h-64 w-full overflow-hidden relative bg-stone-50"
-                      onClick={() => setSelectedProduct(product)}
-                    >
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name} 
-                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                    <div className="card-image-wrapper">
+                      <img
+                        src={product.imageUrl}
+                        alt={product.name}
                         loading="lazy"
                       />
-                      
-                      {/* Category Badge */}
-                      <span className="absolute top-4 left-4 z-10 px-3 py-1 text-[10px] font-bold bg-white/90 text-stone-800 rounded-full tracking-wider uppercase backdrop-blur-md shadow-xs">
-                        {product.category}
-                      </span>
-
-                      {/* Dark overlay + Centered View Details Button */}
-                      <div className="absolute inset-0 bg-black/45 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 z-20">
+                      <div className="card-hover-overlay">
                         <button
                           type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedProduct(product);
                           }}
-                          className="px-5 py-2.5 bg-white text-stone-900 font-semibold text-xs rounded-full shadow-lg hover:bg-[#c19571] hover:text-white transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-2"
+                          className="view-details-btn"
                         >
-                          <i className="fas fa-eye"></i>
                           View Details
                         </button>
                       </div>
                     </div>
 
-                    {/* Content area */}
-                    <div className="p-5 flex flex-col flex-grow justify-between bg-white">
-                      <div>
-                        <h3 
-                          onClick={() => setSelectedProduct(product)}
-                          className="font-bold text-base text-stone-900 tracking-tight line-clamp-2 leading-snug hover:text-[#c19571] transition-colors"
-                        >
-                          {product.name}
-                        </h3>
-                        
-                        <div className="mt-3 flex items-center justify-between">
-                          <span className="text-xs font-semibold text-stone-500 bg-stone-100 px-2.5 py-1 rounded-md">
-                            {product.material || "Wood"}
-                          </span>
-                          <strong className="text-[#c19571] font-extrabold text-base tracking-wide">
-                            Rs. {Number(product.price || 0).toLocaleString()}
-                          </strong>
-                        </div>
+                    <div className="product-info">
+                      <h3>
+                        {product.name}
+                      </h3>
+                      <div className="product-price">
+                        Rs. {Number(product.price || 0).toLocaleString()}
                       </div>
-
-                      {/* Add to Cart button */}
-                      <button
-                        type="button"
-                        onClick={() => handleAddToCart(product)}
-                        className="mt-5 w-full py-2.5 rounded-xl border border-stone-300 font-medium text-sm text-stone-800 hover:bg-[#c19571] hover:border-[#c19571] hover:text-white transition-all duration-300 focus:outline-none flex items-center justify-center gap-2 shadow-xs"
-                      >
-                        <i className="fas fa-shopping-cart text-xs"></i>
-                        Add to Cart
-                      </button>
                     </div>
-
                   </article>
                 ))}
               </div>
@@ -438,9 +396,9 @@ const Browse = () => {
 
       {/* Product Details Modal */}
       {selectedProduct && (
-        <ProductDetailsModal 
-          product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
+        <ProductDetailsModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
         />
       )}
 
