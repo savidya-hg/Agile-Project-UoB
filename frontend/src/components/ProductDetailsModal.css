@@ -138,6 +138,60 @@
   display: block;
 }
 
+/* --- Slider Arrows --- */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #e8ddd0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  color: #2d1e12;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.slider-arrow:hover {
+  background: #c19571;
+  color: #fff;
+  border-color: #c19571;
+  transform: translateY(-50%) scale(1.1);
+}
+.slider-arrow.prev { left: 1rem; }
+.slider-arrow.next { right: 1rem; }
+
+/* --- Slider Dots --- */
+.slider-dots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+}
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e8ddd0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+.slider-dot.active {
+  background: #c19571;
+  transform: scale(1.3);
+}
+.slider-dot:hover:not(.active) {
+  background: #d6c6b3;
+}
+
 .product-modal-badge {
   position: absolute;
   top: 1rem;

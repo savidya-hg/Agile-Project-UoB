@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import './ProductDetailsModal.css';
 
@@ -9,6 +9,28 @@ const ProductDetailsModal = ({ product, onClose }) => {
 
   const images = product.images && product.images.length > 0 ? product.images : [product.imageUrl];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+
+  // Auto-slide logic
+  useEffect(() => {
+    if (images.length <= 1 || isHovering) return;
+    
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+    
+    return () => clearInterval(interval);
+  }, [images.length, isHovering]);
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   const handleMouseMove = (e) => {
     const { left, top, width, height } = e.target.getBoundingClientRect();
@@ -54,11 +76,46 @@ const ProductDetailsModal = ({ product, onClose }) => {
         <div className="product-modal-body">
           {/* Left Column: Interactive Image Gallery */}
           <div className="product-modal-image-col">
-            <div className="product-modal-img-wrapper" onMouseMove={handleMouseMove}>
+            <div 
+              className="product-modal-img-wrapper" 
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={(e) => {
+                setIsHovering(false);
+                e.target.style.transformOrigin = 'center center';
+              }}
+            >
               <img src={images[currentImageIndex]} alt={product.name} className="zoomable-image" />
               <span className="product-modal-badge">{product.category || 'Luxury Collection'}</span>
+              
+              {/* Arrows for sliding */}
+              {images.length > 1 && (
+                <>
+                  <button className="slider-arrow prev" onClick={prevImage}>
+                    <i className="fas fa-chevron-left"></i>
+                  </button>
+                  <button className="slider-arrow next" onClick={nextImage}>
+                    <i className="fas fa-chevron-right"></i>
+                  </button>
+                </>
+              )}
             </div>
             
+            {/* Dots Indicator */}
+            {images.length > 1 && (
+              <div className="slider-dots">
+                {images.map((_, idx) => (
+                  <button 
+                    key={idx}
+                    className={`slider-dot ${idx === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+            
+            {/* Thumbnails */}
             {images.length > 1 && (
               <div className="product-modal-thumbnails">
                 {images.map((imgSrc, idx) => (

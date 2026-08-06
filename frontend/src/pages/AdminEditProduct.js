@@ -19,13 +19,22 @@ const AdminEditProduct = () => {
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
   const [currentImages, setCurrentImages] = useState([]);
+  const [settings, setSettings] = useState({ categories: [], materials: [] });
 
-  // Fetch product data
+  // Fetch product data and settings
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchData = async () => {
       try {
-        const res = await API.get(`/products/${id}`);
-        const product = res.data;
+        const [productRes, settingsRes] = await Promise.all([
+          API.get(`/products/${id}`),
+          API.get('/settings').catch(() => ({ data: { categories: [], materials: [] } }))
+        ]);
+        
+        const product = productRes.data;
+        if (settingsRes.data && settingsRes.data.categories) {
+          setSettings(settingsRes.data);
+        }
+
         setForm({
           name: product.name,
           price: product.price,
@@ -44,7 +53,7 @@ const AdminEditProduct = () => {
         setLoading(false);
       }
     };
-    fetchProduct();
+    fetchData();
   }, [id, navigate]);
 
   const handleChange = (e) => {
@@ -151,11 +160,9 @@ const AdminEditProduct = () => {
               required
             >
               <option value="">Select a Category</option>
-              <option value="Living Room">Living Room</option>
-              <option value="Bedroom">Bedroom</option>
-              <option value="Dining">Dining</option>
-              <option value="Office">Office</option>
-              <option value="Outdoor">Outdoor</option>
+              {settings.categories.map((cat, index) => (
+                <option key={index} value={cat}>{cat}</option>
+              ))}
             </select>
           </div>
           <div className="form-group">
@@ -167,14 +174,9 @@ const AdminEditProduct = () => {
               required
             >
               <option value="">Select a Material</option>
-              <option value="Wood">Wood</option>
-              <option value="Oak">Oak</option>
-              <option value="Velvet">Velvet</option>
-              <option value="Leather">Leather</option>
-              <option value="Marble">Marble</option>
-              <option value="Glass">Glass</option>
-              <option value="Metal">Metal</option>
-              <option value="Fabric">Fabric</option>
+              {settings.materials.map((mat, index) => (
+                <option key={index} value={mat}>{mat}</option>
+              ))}
             </select>
           </div>
           <div className="form-group">

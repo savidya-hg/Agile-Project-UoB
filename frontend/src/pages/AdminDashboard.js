@@ -13,6 +13,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard', 'inventory', 'settings'
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [settings, setSettings] = useState({ categories: [], materials: [] });
 
   const correctPassword = process.env.REACT_APP_ADMIN_PASS || 'admin123';
 
@@ -28,12 +29,22 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchSettings = async () => {
+    try {
+      const res = await API.get('/settings');
+      if (res.data) setSettings(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (password === correctPassword) {
       setIsLoggedIn(true);
       localStorage.setItem('adminAuth', 'true');
       fetchProducts();
+      fetchSettings();
     } else {
       alert('Wrong password!');
     }
@@ -60,6 +71,7 @@ const AdminDashboard = () => {
     if (auth === 'true') {
       setIsLoggedIn(true);
       fetchProducts();
+      fetchSettings();
     } else {
       setLoading(false);
     }
@@ -94,13 +106,13 @@ const AdminDashboard = () => {
   const renderView = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <DashboardOverview products={products} />;
+        return <DashboardOverview products={products} settings={settings} />;
       case 'inventory':
         return <InventoryManager products={products} loading={loading} navigate={navigate} handleDelete={handleDelete} />;
       case 'settings':
         return <StoreSettings />;
       default:
-        return <DashboardOverview products={products} />;
+        return <DashboardOverview products={products} settings={settings} />;
     }
   };
 
