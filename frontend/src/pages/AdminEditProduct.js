@@ -16,16 +16,25 @@ const AdminEditProduct = () => {
     category: '',
     material: ''
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
-  const [currentImage, setCurrentImage] = useState('');
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
+  const [currentImages, setCurrentImages] = useState([]);
+  const [settings, setSettings] = useState({ categories: [], materials: [] });
 
-  // Fetch product data
+  // Fetch product data and settings
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchData = async () => {
       try {
-        const res = await API.get(`/products/${id}`);
-        const product = res.data;
+        const [productRes, settingsRes] = await Promise.all([
+          API.get(`/products/${id}`),
+          API.get('/settings').catch(() => ({ data: { categories: [], materials: [] } }))
+        ]);
+        
+        const product = productRes.data;
+        if (settingsRes.data && settingsRes.data.categories) {
+          setSettings(settingsRes.data);
+        }
+
         setForm({
           name: product.name,
           price: product.price,
@@ -33,8 +42,9 @@ const AdminEditProduct = () => {
           category: product.category || '',
           material: product.material || ''
         });
-        setCurrentImage(product.imageUrl);
-        setImagePreview(product.imageUrl);
+        const imagesArray = product.images && product.images.length > 0 ? product.images : [product.imageUrl];
+        setCurrentImages(imagesArray);
+        setImagePreviews(imagesArray);
       } catch (err) {
         console.error('Error fetching product:', err);
         alert('Product not found');
@@ -43,7 +53,7 @@ const AdminEditProduct = () => {
         setLoading(false);
       }
     };
-    fetchProduct();
+    fetchData();
   }, [id, navigate]);
 
   const handleChange = (e) => {
@@ -51,11 +61,15 @@ const AdminEditProduct = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
+    const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      alert('You can only upload up to 5 images.');
+      return;
     }
+    setImageFiles(files);
+    
+    const previews = files.map(file => URL.createObjectURL(file));
+    setImagePreviews(previews);
   };
 
   const handleSubmit = async (e) => {
@@ -67,22 +81,26 @@ const AdminEditProduct = () => {
     setSaving(true);
 
     try {
-      let imageUrl = currentImage;
+      let imageUrl = currentImages[0];
+      let images = currentImages;
 
       // If a new image was uploaded, upload it
-      if (imageFile) {
+      if (imageFiles.length > 0) {
         const formData = new FormData();
-        formData.append('image', imageFile);
-        const uploadRes = await API.post('/products/upload', formData, {
+        imageFiles.forEach(file => {
+          formData.append('images', file);
+        });
+        const uploadRes = await API.post('/products/upload-multiple', formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        imageUrl = uploadRes.data.imageUrl;
+        images = uploadRes.data.imageUrls;
+        imageUrl = images[0];
       }
 
       // Compute new AI vector (even if image hasn't changed, we might need to recompute)
       let vector = [];
-      if (imageFile) {
-        // New image → compute new vector
+      if (imageFiles.length > 0) {
+        // New image → compute new vector on primary image
         const img = new Image();
         img.crossOrigin = 'anonymous';
         img.src = imageUrl;
@@ -99,6 +117,7 @@ const AdminEditProduct = () => {
         ...form,
         price: parseFloat(form.price),
         imageUrl,
+        images,
         vector
       };
       await API.put(`/products/${id}`, productData);
@@ -141,11 +160,9 @@ const AdminEditProduct = () => {
               required
             >
               <option value="">Select a Category</option>
-              <option value="Living Room">Living Room</option>
-              <option value="Bedroom">Bedroom</option>
-              <option value="Dining">Dining</option>
-              <option value="Office">Office</option>
-              <option value="Outdoor">Outdoor</option>
+              {settings.categories.map((cat, index) => (
+                <option key={index} value={cat}>{cat}</option>
+              ))}
             </select>
           </div>
           <div className="form-group">
@@ -157,26 +174,25 @@ const AdminEditProduct = () => {
               required
             >
               <option value="">Select a Material</option>
-              <option value="Wood">Wood</option>
-              <option value="Oak">Oak</option>
-              <option value="Velvet">Velvet</option>
-              <option value="Leather">Leather</option>
-              <option value="Marble">Marble</option>
-              <option value="Glass">Glass</option>
-              <option value="Metal">Metal</option>
-              <option value="Fabric">Fabric</option>
+              {settings.materials.map((mat, index) => (
+                <option key={index} value={mat}>{mat}</option>
+              ))}
             </select>
           </div>
           <div className="form-group">
-            <label>Product Image</label>
-            {imagePreview && (
+            <label>Product Images (Up to 5)</label>
+            {imagePreviews.length > 0 && (
               <div>
-                <img src={imagePreview} alt="Preview" className="preview-img" />
+                <div className="previews-container">
+                  {imagePreviews.map((src, index) => (
+                    <img key={index} src={src} alt={`Preview ${index}`} className="preview-img" style={{ marginRight: '10px', width: '80px', height: '80px', objectFit: 'cover' }} />
+                  ))}
+                </div>
                 <button 
                   type="button" 
                   onClick={() => {
-                    setImagePreview(currentImage);
-                    setImageFile(null);
+                    setImagePreviews(currentImages);
+                    setImageFiles([]);
                   }}
                   className="btn-secondary" 
                   style={{ marginTop: '0.5rem', display: 'block' }}
@@ -187,11 +203,12 @@ const AdminEditProduct = () => {
             )}
             <input 
               type="file" 
-              accept="image/*" 
+              accept="image/*"
+              multiple 
               onChange={handleImageChange} 
               style={{ marginTop: '0.5rem' }}
             />
-            <p className="hint">Upload a new image to replace the current one (optional)</p>
+            <p className="hint">Upload new images to completely replace the current ones (optional)</p>
           </div>
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
             <button type="submit" className="btn-primary" disabled={saving}>

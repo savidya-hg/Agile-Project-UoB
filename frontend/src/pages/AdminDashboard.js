@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/axiosConfig';
+import DashboardOverview from '../components/admin/DashboardOverview';
+import InventoryManager from '../components/admin/InventoryManager';
+import StoreSettings from '../components/admin/StoreSettings';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('dashboard'); // 'dashboard', 'inventory', 'settings'
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [settings, setSettings] = useState({ categories: [], materials: [] });
 
   const correctPassword = process.env.REACT_APP_ADMIN_PASS || 'admin123';
 
@@ -24,12 +29,22 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchSettings = async () => {
+    try {
+      const res = await API.get('/settings');
+      if (res.data) setSettings(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (password === correctPassword) {
       setIsLoggedIn(true);
       localStorage.setItem('adminAuth', 'true');
       fetchProducts();
+      fetchSettings();
     } else {
       alert('Wrong password!');
     }
@@ -45,6 +60,14 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'dashboard' || tab === 'inventory') {
+      fetchProducts();
+      fetchSettings();
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('adminAuth');
     setIsLoggedIn(false);
@@ -56,6 +79,7 @@ const AdminDashboard = () => {
     if (auth === 'true') {
       setIsLoggedIn(true);
       fetchProducts();
+      fetchSettings();
     } else {
       setLoading(false);
     }
@@ -85,37 +109,60 @@ const AdminDashboard = () => {
   }
 
   // --- Dashboard ---
-  return (
-    <div className="admin-dashboard">
-      <div className="admin-header">
-        <h1><i className="fas fa-boxes-stacked" style={{ color: '#c49a6c', fontSize: '2rem' }}></i> Manage Inventory</h1>
-        <div>
-          <button className="btn-primary" onClick={() => navigate('/admin/add')}>+ Add New</button>
-          <button className="btn-secondary" onClick={handleLogout} style={{marginLeft:'1rem'}}>Logout</button>
-        </div>
-      </div>
 
-      {loading ? (
-        <p>Loading products...</p>
-      ) : (
-        <div className="admin-product-grid">
-          {products.length === 0 && <p>No products yet. Add one!</p>}
-          {products.map(p => (
-            <div key={p._id} className="admin-product-card">
-              <img src={p.imageUrl} alt={p.name} />
-              <div className="info">
-                <h3>{p.name}</h3>
-                <p className="price">Rs. {p.price}</p>
-                <p className="category">{p.category} {p.material ? `• ${p.material}` : ''}</p>
-                <div className="actions">
-                  <button className="btn-edit" onClick={() => navigate(`/admin/edit/${p._id}`)}>Edit</button>
-                  <button className="btn-delete" onClick={() => handleDelete(p._id)}>Delete</button>
-                </div>
-              </div>
-            </div>
-          ))}
+  // --- Views ---
+  const renderView = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <DashboardOverview products={products} settings={settings} />;
+      case 'inventory':
+        return <InventoryManager products={products} loading={loading} navigate={navigate} handleDelete={handleDelete} />;
+      case 'settings':
+        return <StoreSettings />;
+      default:
+        return <DashboardOverview products={products} settings={settings} />;
+    }
+  };
+
+  // --- Main Layout ---
+  return (
+    <div className="admin-layout">
+      {/* Sidebar */}
+      <aside className="admin-sidebar">
+        <div className="admin-brand">
+          <h2>BFH Admin</h2>
         </div>
-      )}
+        <nav className="admin-nav">
+          <button 
+            className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => handleTabChange('dashboard')}
+          >
+            <i className="fas fa-chart-line"></i> Dashboard
+          </button>
+          <button 
+            className={`nav-btn ${activeTab === 'inventory' ? 'active' : ''}`}
+            onClick={() => handleTabChange('inventory')}
+          >
+            <i className="fas fa-boxes-stacked"></i> Manage Inventory
+          </button>
+          <button 
+            className={`nav-btn ${activeTab === 'settings' ? 'active' : ''}`}
+            onClick={() => handleTabChange('settings')}
+          >
+            <i className="fas fa-cog"></i> Settings
+          </button>
+        </nav>
+        <div className="admin-sidebar-footer">
+          <button className="logout-btn" onClick={handleLogout}>
+            <i className="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content Area */}
+      <main className="admin-main-content">
+        {renderView()}
+      </main>
     </div>
   );
 };

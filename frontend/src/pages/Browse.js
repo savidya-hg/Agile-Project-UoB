@@ -83,28 +83,37 @@ const Browse = () => {
 
   const { addToCart } = useCart();
 
-  const categoriesList = ["Living Room", "Dining", "Office", "Bedroom", "Outdoor"];
-  const materialsList = ["All", "Wood", "Oak", "Velvet", "Leather", "Marble", "Glass", "Metal", "Fabric"];
+  const [categoriesList, setCategoriesList] = useState(["Living Room", "Dining", "Office", "Bedroom", "Outdoor"]);
+  const [materialsList, setMaterialsList] = useState(["All", "Wood", "Oak", "Velvet", "Leather", "Marble", "Glass", "Metal", "Fabric"]);
 
-  // Fetch products from API on mount
+  // Fetch products and settings from API on mount
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const res = await API.get("/products");
-        if (res.data && res.data.length > 0) {
-          setAllProducts(res.data);
+        const [productsRes, settingsRes] = await Promise.all([
+          API.get("/products").catch(() => ({ data: [] })),
+          API.get("/settings").catch(() => ({ data: null }))
+        ]);
+
+        if (productsRes.data && productsRes.data.length > 0) {
+          setAllProducts(productsRes.data);
         } else {
           setAllProducts(fallbackProducts);
         }
+
+        if (settingsRes.data) {
+          if (settingsRes.data.categories) setCategoriesList(settingsRes.data.categories);
+          if (settingsRes.data.materials) setMaterialsList(["All", ...settingsRes.data.materials]);
+        }
       } catch (err) {
-        console.error("Error fetching products:", err);
+        console.error("Error fetching data:", err);
         setAllProducts(fallbackProducts);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchData();
   }, []);
 
   // Handle category & AI modal updates from URL search query
@@ -128,8 +137,7 @@ const Browse = () => {
     } else {
       setSelectedCategories([]);
     }
-    // eslint-disable-next-line
-  }, [location.search]);
+  }, [location.search, categoriesList]);
 
   // Compute final filtered list
   const filteredProducts = useMemo(() => {

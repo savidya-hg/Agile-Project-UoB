@@ -43,6 +43,36 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+// --- MULTIPLE IMAGE UPLOAD ROUTE ---
+router.post('/upload-multiple', upload.array('images', 5), async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) return res.status(400).json({ error: 'No images uploaded' });
+
+    const streamUpload = (buffer) => {
+      return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: 'furniture_shop' },
+          (error, result) => {
+            if (result) resolve(result);
+            else reject(error);
+          }
+        );
+        const readable = Readable.from(buffer);
+        readable.pipe(stream);
+      });
+    };
+
+    const uploadPromises = req.files.map(file => streamUpload(file.buffer));
+    const results = await Promise.all(uploadPromises);
+    
+    const imageUrls = results.map(result => result.secure_url);
+    res.json({ imageUrls });
+  } catch (err) {
+    console.error('Multiple upload error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // --- PRODUCT CRUD ROUTES ---
 router.get('/', productController.getAllProducts);
 router.get('/:id', productController.getProductById);

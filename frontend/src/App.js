@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -10,6 +10,12 @@ import AdminEditProduct from './pages/AdminEditProduct';
 import Cart from './pages/Cart';
 import Contact from './pages/Contact';
 import './App.css';
+
+const ConditionalFooter = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+  return !isAdminRoute ? <Footer /> : null;
+};
 
 function App() {
   return (
@@ -27,7 +33,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           
         </Routes>
-        <Footer /> 
+        <ConditionalFooter /> 
       </BrowserRouter>
     </CartProvider>
   );
