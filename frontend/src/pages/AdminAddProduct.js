@@ -7,8 +7,8 @@ import './AdminAddProduct.css';
 const AdminAddProduct = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', price: '', description: '', category: '', material: '' });
-  const [imageFile, setImageFile] = useState(null);
-  const [imagePreview, setImagePreview] = useState('');
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -16,33 +16,39 @@ const AdminAddProduct = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
+    const files = Array.from(e.target.files);
+    if (files.length > 5) {
+      alert('You can only upload up to 5 images.');
+      return;
     }
+    setImageFiles(files);
+    
+    const previews = files.map(file => URL.createObjectURL(file));
+    setImagePreviews(previews);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!imageFile) return alert('Please select an image');
+    if (imageFiles.length === 0) return alert('Please select at least one image');
     if (!form.name || !form.price) return alert('Name and Price are required');
 
     setLoading(true);
 
     try {
-      // 1. Upload image to Cloudinary via backend
+      // 1. Upload images to Cloudinary via backend
       const formData = new FormData();
-      formData.append('image', imageFile);
-      const uploadRes = await API.post('/products/upload', formData, {
+      imageFiles.forEach(file => {
+        formData.append('images', file);
+      });
+      const uploadRes = await API.post('/products/upload-multiple', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      const imageUrl = uploadRes.data.imageUrl;
+      const imageUrls = uploadRes.data.imageUrls;
 
-      // 2. Load image into an HTML element and compute AI vector
+      // 2. Load the FIRST image into an HTML element and compute AI vector
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = imageUrl;
+      img.src = imageUrls[0];
       await new Promise((resolve) => { img.onload = resolve; });
       
       const vector = await getImageVector(img);
@@ -51,7 +57,8 @@ const AdminAddProduct = () => {
       const productData = {
         ...form,
         price: parseFloat(form.price),
-        imageUrl,
+        imageUrl: imageUrls[0], // primary fallback
+        images: imageUrls,
         vector
       };
       await API.post('/products', productData);
@@ -119,9 +126,13 @@ const AdminAddProduct = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Product Image *</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} required />
-            {imagePreview && <img src={imagePreview} alt="Preview" className="preview-img" />}
+            <label>Product Images (Up to 5) *</label>
+            <input type="file" accept="image/*" multiple onChange={handleImageChange} required />
+            <div className="previews-container">
+              {imagePreviews.map((src, index) => (
+                <img key={index} src={src} alt={`Preview ${index}`} className="preview-img" style={{ marginRight: '10px', width: '80px', height: '80px', objectFit: 'cover' }} />
+              ))}
+            </div>
           </div>
           <button type="submit" className="btn-primary" disabled={loading}>
             {loading ? 'Processing AI Vector...' : 'Save Product'}
