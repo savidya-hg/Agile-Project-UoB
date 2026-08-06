@@ -7,6 +7,16 @@ const ProductDetailsModal = ({ product, onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const [addedNotice, setAddedNotice] = useState(false);
 
+  const images = product.images && product.images.length > 0 ? product.images : [product.imageUrl];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = e.target.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    e.target.style.transformOrigin = `${x}% ${y}%`;
+  };
+
   if (!product) return null;
 
   const formattedPrice = Number(product.price || 0).toLocaleString();
@@ -42,12 +52,26 @@ const ProductDetailsModal = ({ product, onClose }) => {
         </button>
 
         <div className="product-modal-body">
-          {/* Left Column: Large Product Image */}
+          {/* Left Column: Interactive Image Gallery */}
           <div className="product-modal-image-col">
-            <div className="product-modal-img-wrapper">
-              <img src={product.imageUrl} alt={product.name} />
+            <div className="product-modal-img-wrapper" onMouseMove={handleMouseMove}>
+              <img src={images[currentImageIndex]} alt={product.name} className="zoomable-image" />
               <span className="product-modal-badge">{product.category || 'Luxury Collection'}</span>
             </div>
+            
+            {images.length > 1 && (
+              <div className="product-modal-thumbnails">
+                {images.map((imgSrc, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`thumbnail-wrapper ${idx === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => setCurrentImageIndex(idx)}
+                  >
+                    <img src={imgSrc} alt={`Thumbnail ${idx}`} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Right Column: Details & Actions */}
