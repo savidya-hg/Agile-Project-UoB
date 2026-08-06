@@ -1,5 +1,5 @@
 // Navbar.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import AISearchModal from './AISearchModal';
@@ -13,14 +13,30 @@ const Navbar = () => {
     const totalItems = getTotalItems();
     const navigate = useNavigate();
 
-    const categories = [
-        { value: '', label: 'All Categories' },
-        { value: 'living-room', label: 'Living Room' },
-        { value: 'bedroom', label: 'Bedroom' },
-        { value: 'dining', label: 'Dining' },
-        { value: 'office', label: 'Office' },
-        { value: 'outdoor', label: 'Outdoor' },
-    ];
+    const [categories, setCategories] = useState([{ value: '', label: 'All Categories' }]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                // Must import API inside or at the top if not imported.
+                // It looks like API isn't imported, let's just use fetch or import it.
+                // Wait, it's better to add the import at the top. I'll do that in a separate chunk or just use fetch for simplicity.
+                // I will use fetch since we are hitting our own proxy.
+                const res = await fetch('/api/settings');
+                const data = await res.json();
+                if (data && data.categories) {
+                    const dynamicCats = data.categories.map(c => ({
+                        value: c.toLowerCase().replace(/[^a-z0-9]/g, "-"),
+                        label: c
+                    }));
+                    setCategories([{ value: '', label: 'All Categories' }, ...dynamicCats]);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchCategories();
+    }, []);
 
     const handleCategoryChange = (e) => {
         const selected = e.target.value;

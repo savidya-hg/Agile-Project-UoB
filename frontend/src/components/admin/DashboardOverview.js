@@ -1,21 +1,29 @@
 import React from 'react';
 
-const DashboardOverview = ({ products }) => {
+const DashboardOverview = ({ products, settings }) => {
   // --- Calculations for Dashboard ---
   const totalProducts = products.length;
   const totalValue = products.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
   
-  const categoryCounts = products.reduce((acc, p) => {
-    acc[p.category] = (acc[p.category] || 0) + 1;
-    return acc;
-  }, {});
-
-  const materialCounts = products.reduce((acc, p) => {
-    if (p.material) {
-      acc[p.material] = (acc[p.material] || 0) + 1;
+  const categoryCounts = {};
+  if (settings && settings.categories) {
+    settings.categories.forEach(cat => categoryCounts[cat] = 0);
+  }
+  products.forEach(p => {
+    if (p.category) {
+      categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
     }
-    return acc;
-  }, {});
+  });
+
+  const materialCounts = {};
+  if (settings && settings.materials) {
+    settings.materials.forEach(mat => materialCounts[mat] = 0);
+  }
+  products.forEach(p => {
+    if (p.material) {
+      materialCounts[p.material] = (materialCounts[p.material] || 0) + 1;
+    }
+  });
 
   const recentProducts = [...products].sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)).slice(0, 4);
 

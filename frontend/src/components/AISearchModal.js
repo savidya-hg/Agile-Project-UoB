@@ -13,20 +13,28 @@ const AISearchModal = ({ onClose }) => {
   const [error, setError] = useState('');
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  const categoriesList = ["Living Room", "Dining", "Office", "Bedroom", "Outdoor"];
+  const [categoriesList, setCategoriesList] = useState(["Living Room", "Dining", "Office", "Bedroom", "Outdoor"]);
 
-  // Fetch all products on mount to perform similarity search
+  // Fetch all products and settings on mount to perform similarity search and get categories
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const res = await API.get('/products');
-        setProducts(res.data || []);
+        const [productsRes, settingsRes] = await Promise.all([
+          API.get('/products').catch(() => ({ data: [] })),
+          API.get('/settings').catch(() => ({ data: null }))
+        ]);
+        
+        setProducts(productsRes.data || []);
+        
+        if (settingsRes.data && settingsRes.data.categories) {
+          setCategoriesList(settingsRes.data.categories);
+        }
       } catch (err) {
-        console.error('Error fetching products for AI search:', err);
+        console.error('Error fetching data for AI search:', err);
         setError('Failed to initialize AI search database.');
       }
     };
-    fetchProducts();
+    fetchData();
   }, []);
 
   const handleImageUpload = async (e) => {
