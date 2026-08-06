@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import API from '../api/axiosConfig';
 import './Cart.css';
 
 const Cart = () => {
@@ -10,6 +11,21 @@ const Cart = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [deliveryFee, setDeliveryFee] = useState(0);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await API.get('/settings');
+        if (res.data && res.data.deliveryPrice !== undefined) {
+          setDeliveryFee(Number(res.data.deliveryPrice));
+        }
+      } catch (err) {
+        console.error("Failed to fetch delivery fee:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   const totalPrice = getTotalPrice();
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -35,7 +51,9 @@ const Cart = () => {
     });
 
     message += `─────────────────\n`;
-    message += `*TOTAL: ${formatPrice(totalPrice)}*\n\n`;
+    message += `*Subtotal:* ${formatPrice(totalPrice)}\n`;
+    message += `*Delivery Fee:* ${deliveryFee === 0 ? 'Free' : formatPrice(deliveryFee)}\n`;
+    message += `*TOTAL:* ${formatPrice(totalPrice + deliveryFee)}\n\n`;
     message += `Thank you for your order!`;
 
     return message;
@@ -180,12 +198,14 @@ const Cart = () => {
             </div>
             <div className="summary-row">
               <span>Delivery</span>
-              <span className="summary-free">Free</span>
+              <span className={deliveryFee === 0 ? "summary-free" : ""}>
+                {deliveryFee === 0 ? 'Free' : formatPrice(deliveryFee)}
+              </span>
             </div>
             <div className="summary-divider"></div>
             <div className="summary-total">
               <span>Total</span>
-              <span className="total-price">{formatPrice(totalPrice)}</span>
+              <span className="total-price">{formatPrice(totalPrice + deliveryFee)}</span>
             </div>
 
             <div className="customer-form">

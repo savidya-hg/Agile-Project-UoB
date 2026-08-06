@@ -16,7 +16,7 @@ const StoreSettings = () => {
     try {
       const res = await API.get('/settings');
       setSettings(res.data);
-      setDeliveryPrice(res.data.deliveryPrice || 2500);
+      setDeliveryPrice(res.data.deliveryPrice !== undefined ? res.data.deliveryPrice : 2500);
     } catch (err) {
       console.error(err);
     } finally {

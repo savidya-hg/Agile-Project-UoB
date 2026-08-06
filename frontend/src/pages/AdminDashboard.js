@@ -60,6 +60,14 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'dashboard' || tab === 'inventory') {
+      fetchProducts();
+      fetchSettings();
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('adminAuth');
     setIsLoggedIn(false);
@@ -127,19 +135,19 @@ const AdminDashboard = () => {
         <nav className="admin-nav">
           <button 
             className={`nav-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
-            onClick={() => setActiveTab('dashboard')}
+            onClick={() => handleTabChange('dashboard')}
           >
             <i className="fas fa-chart-line"></i> Dashboard
           </button>
           <button 
             className={`nav-btn ${activeTab === 'inventory' ? 'active' : ''}`}
-            onClick={() => setActiveTab('inventory')}
+            onClick={() => handleTabChange('inventory')}
           >
             <i className="fas fa-boxes-stacked"></i> Manage Inventory
           </button>
           <button 
             className={`nav-btn ${activeTab === 'settings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('settings')}
+            onClick={() => handleTabChange('settings')}
           >
             <i className="fas fa-cog"></i> Settings
           </button>
