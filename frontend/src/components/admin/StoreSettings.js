@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../api/axiosConfig';
+import { useSettings } from '../../context/SettingsContext';
 
 const StoreSettings = () => {
   const [settings, setSettings] = useState(null);
@@ -7,6 +8,8 @@ const StoreSettings = () => {
   const [newCat, setNewCat] = useState('');
   const [newMat, setNewMat] = useState('');
   const [deliveryPrice, setDeliveryPrice] = useState(0);
+  const [whatsappNumber, setWhatsappNumber] = useState('');
+  const { refreshSettings } = useSettings();
 
   useEffect(() => {
     fetchSettings();
@@ -17,6 +20,7 @@ const StoreSettings = () => {
       const res = await API.get('/settings');
       setSettings(res.data);
       setDeliveryPrice(res.data.deliveryPrice !== undefined ? res.data.deliveryPrice : 2500);
+      setWhatsappNumber(res.data.whatsappNumber || '');
     } catch (err) {
       console.error(err);
     } finally {
@@ -28,6 +32,7 @@ const StoreSettings = () => {
     try {
       const res = await API.put('/settings', updatedFields);
       setSettings(res.data);
+      if (refreshSettings) refreshSettings(); // Sync global state
       alert('Settings saved!');
     } catch (err) {
       alert('Failed to save settings: ' + err.message);
@@ -36,6 +41,31 @@ const StoreSettings = () => {
 
   const handleSaveDelivery = () => {
     saveSettings({ deliveryPrice: Number(deliveryPrice) });
+  };
+
+  const handleSaveWhatsappNumber = () => {
+    let num = whatsappNumber.trim();
+    
+    // Remove +, spaces, and dashes
+    num = num.replace(/[\s+-]/g, '');
+
+    if (!num) {
+      saveSettings({ whatsappNumber: '' });
+      return;
+    }
+
+    if (!/^\d{10,15}$/.test(num)) {
+      alert('Please enter a valid WhatsApp number (10 to 15 digits).');
+      return;
+    }
+
+    if (num.startsWith('0')) {
+      alert('Please include the country code instead of a leading zero (e.g., use 9477... instead of 077...).');
+      return;
+    }
+
+    saveSettings({ whatsappNumber: num });
+    setWhatsappNumber(num);
   };
 
   const handleAddCategory = () => {
@@ -81,6 +111,20 @@ const StoreSettings = () => {
             />
           </div>
           <button className="btn-secondary" onClick={handleSaveDelivery}>Save Delivery Settings</button>
+        </div>
+
+        <div className="settings-section">
+          <h3>WhatsApp Contact</h3>
+          <div className="form-group">
+            <label>WhatsApp Number (e.g. 94773132443)</label>
+            <input 
+              type="text" 
+              value={whatsappNumber} 
+              onChange={(e) => setWhatsappNumber(e.target.value)} 
+              placeholder="Enter WhatsApp Number"
+            />
+          </div>
+          <button className="btn-secondary" onClick={handleSaveWhatsappNumber}>Save Number</button>
         </div>
 
         <div className="settings-section">

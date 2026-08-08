@@ -1,8 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import { useSettings } from '../context/SettingsContext';
 
 const Footer = () => {
+  const { settings } = useSettings();
+  const whatsappNumber = settings?.whatsappNumber || '94773132443';
+
   return (
     <footer className="footer">
       <div className="footer-inner">
@@ -39,13 +43,13 @@ const Footer = () => {
         <div className="footer-social">
           <h4>Contact Us</h4>
           <a
-            href="https://wa.me/94773132443"
+            href={`https://wa.me/${whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="whatsapp-link"
           >
             <i className="fab fa-whatsapp"></i>
-            <span>+94 77 313 2443</span>
+            <span>+{whatsappNumber}</span>
           </a>
         </div>
       </div>
