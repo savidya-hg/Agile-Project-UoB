@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import API from '../api/axiosConfig';
 import './Cart.css';
 
@@ -11,21 +12,9 @@ const Cart = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [isSending, setIsSending] = useState(false);
-  const [deliveryFee, setDeliveryFee] = useState(0);
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const res = await API.get('/settings');
-        if (res.data && res.data.deliveryPrice !== undefined) {
-          setDeliveryFee(Number(res.data.deliveryPrice));
-        }
-      } catch (err) {
-        console.error("Failed to fetch delivery fee:", err);
-      }
-    };
-    fetchSettings();
-  }, []);
+  const { settings } = useSettings();
+  const deliveryFee = settings?.deliveryPrice !== undefined ? Number(settings.deliveryPrice) : 2500;
+  const clientPhone = settings?.whatsappNumber || '94773132443';
 
   const totalPrice = getTotalPrice();
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
@@ -82,7 +71,6 @@ const Cart = () => {
     setIsSending(true);
 
     // Client's WhatsApp number
-    const clientPhone = '94773132443';
     const message = generateWhatsAppMessage();
     const encodedMessage = encodeURIComponent(message);
 

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
+import { useSettings } from '../context/SettingsContext';
 import './ProductDetailsModal.css';
 
 const ProductDetailsModal = ({ product, onClose }) => {
   const { addToCart } = useCart();
+  const { settings } = useSettings();
   const [quantity, setQuantity] = useState(1);
   const [addedNotice, setAddedNotice] = useState(false);
 
@@ -52,7 +54,7 @@ const ProductDetailsModal = ({ product, onClose }) => {
   };
 
   const handleWhatsAppOrder = () => {
-    const clientPhone = '94773132443';
+    const clientPhone = settings?.whatsappNumber || '94773132443';
     let message = `*BFH PRODUCT INQUIRY / ORDER*\n\n`;
     message += `*Item:* ${product.name}\n`;
     message += `*Price:* Rs. ${formattedPrice}\n`;

@@ -25,12 +25,13 @@ router.get('/', async (req, res) => {
 // PUT settings
 router.put('/', async (req, res) => {
   try {
-    const { categories, materials, deliveryPrice } = req.body;
+    const { categories, materials, deliveryPrice, whatsappNumber } = req.body;
     const settings = await getSettingsDoc();
     
     if (categories) settings.categories = categories;
     if (materials) settings.materials = materials;
     if (deliveryPrice !== undefined) settings.deliveryPrice = deliveryPrice;
+    if (whatsappNumber !== undefined) settings.whatsappNumber = whatsappNumber;
 
     await settings.save();
     res.json(settings);

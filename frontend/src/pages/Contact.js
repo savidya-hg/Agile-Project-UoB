@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Contact.css';
+import { useSettings } from '../context/SettingsContext';
 // Import the hero image
 import getInTouchImg from '../assets/get-in-touch.png';
 
 const Contact = () => {
-  // WhatsApp number (remove the + for the URL)
-  const whatsappNumber = '94773132443';
+  const { settings, loading } = useSettings();
+  const whatsappNumber = settings?.whatsappNumber || '94773132443';
 
   return (
     <div className="contact-page">
@@ -54,7 +55,7 @@ const Contact = () => {
               <i className="fab fa-whatsapp"></i>
             </div>
             <h3>WhatsApp Us</h3>
-            <p className="contact-phone">+94 77 313 2443</p>
+            <p className="contact-phone">+{whatsappNumber}</p>
             <a
               href={`https://wa.me/${whatsappNumber}`}
               target="_blank"

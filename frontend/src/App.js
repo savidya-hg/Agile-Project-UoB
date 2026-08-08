@@ -11,6 +11,8 @@ import Cart from './pages/Cart';
 import Contact from './pages/Contact';
 import './App.css';
 
+import { SettingsProvider } from './context/SettingsContext';
+
 const ConditionalFooter = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
@@ -19,23 +21,25 @@ const ConditionalFooter = () => {
 
 function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <Navbar />
-        {/* No container div here – each page controls its own layout */}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/browse" element={<Browse />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/add" element={<AdminAddProduct />} />
-          <Route path="/admin/edit/:id" element={<AdminEditProduct />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/contact" element={<Contact />} />
-          
-        </Routes>
-        <ConditionalFooter /> 
-      </BrowserRouter>
-    </CartProvider>
+    <SettingsProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Navbar />
+          {/* No container div here – each page controls its own layout */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/browse" element={<Browse />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/add" element={<AdminAddProduct />} />
+            <Route path="/admin/edit/:id" element={<AdminEditProduct />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/contact" element={<Contact />} />
+            
+          </Routes>
+          <ConditionalFooter /> 
+        </BrowserRouter>
+      </CartProvider>
+    </SettingsProvider>
   );
 }
 
