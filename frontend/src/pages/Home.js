@@ -3,15 +3,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 
 const Home = () => {
-  // Sample furniture images from Unsplash (replace with your own)
-  const featuredProducts = [
-    { id: 1, name: 'Elegant Sofa', price: '$1,200', image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-    { id: 2, name: 'Minimalist Bed', price: '$2,100', image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-    { id: 3, name: 'Dining Table', price: '$1,800', image: 'https://images.unsplash.com/photo-1617806118239-18e1b0e11c9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-    { id: 4, name: 'Office Chair', price: '$450', image: 'https://images.unsplash.com/photo-1580480055273-228ff5388ef8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-    { id: 5, name: 'Bookshelf', price: '$750', image: 'https://images.unsplash.com/photo-1551298370-9d3d53740c6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-    { id: 6, name: 'Coffee Table', price: '$600', image: 'https://images.unsplash.com/photo-1533090368676-1fd25485db88?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-  ];
+
 
   return (
     <div className="home-page">

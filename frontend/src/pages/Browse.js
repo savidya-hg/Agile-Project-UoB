@@ -6,68 +6,7 @@ import ProductDetailsModal from "../components/ProductDetailsModal";
 import { useCart } from "../context/CartContext";
 import "./Browse.css";
 
-const fallbackProducts = [
-  {
-    _id: "fb-1",
-    name: "Sorensen Velvet Sectional Sofa",
-    price: 385000,
-    category: "Living Room",
-    material: "Velvet",
-    color: "Purple",
-    imageUrl: "https://images.unsplash.com/photo-1581428982868-e410dd047a90?auto=format&fit=crop&q=80&w=800",
-    description: "Luxurious deep-cushion sectional upholstered in premium velvet, featuring a custom-built pine wood frame."
-  },
-  {
-    _id: "fb-2",
-    name: "Augusta Marble Dining Table",
-    price: 245000,
-    category: "Dining",
-    material: "Marble",
-    color: "White",
-    imageUrl: "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&q=80&w=800",
-    description: "Elegant polished white marble dining table with custom gold-finished steel supports."
-  },
-  {
-    _id: "fb-3",
-    name: "Hygge Oak Bed Frame",
-    price: 195000,
-    category: "Bedroom",
-    material: "Oak",
-    color: "Brown",
-    imageUrl: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800",
-    description: "Minimalist Scandinavian design crafted from solid premium sustainable oakwood."
-  },
-  {
-    _id: "fb-4",
-    name: "Eames Silhouette Leather Lounge",
-    price: 290000,
-    category: "Living Room",
-    material: "Leather",
-    color: "Black",
-    imageUrl: "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=80&w=800",
-    description: "Ergonomic modern classic lounge chair upholstered in grain-selected black leather."
-  },
-  {
-    _id: "fb-5",
-    name: "Modus Minimalist Desk",
-    price: 135000,
-    category: "Office",
-    material: "Wood",
-    color: "Grey",
-    imageUrl: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=800",
-    description: "Clean lines and spacious drawer compartments for the modern luxury home office."
-  },
-  {
-    _id: "fb-6",
-    name: "Adelphi Velvet Lounge Chair",
-    price: 115000,
-    category: "Bedroom",
-    material: "Velvet",
-    color: "Grey",
-    imageUrl: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&q=80&w=800",
-    description: "Plush single-seater reading chair with accent brass legs and contoured backrest."
-  }
-];
+
 
 const Browse = () => {
   const location = useLocation();
@@ -98,7 +37,7 @@ const Browse = () => {
         if (productsRes.data && productsRes.data.length > 0) {
           setAllProducts(productsRes.data);
         } else {
-          setAllProducts(fallbackProducts);
+          setAllProducts([]);
         }
 
         if (settingsRes.data) {
@@ -107,7 +46,7 @@ const Browse = () => {
         }
       } catch (err) {
         console.error("Error fetching data:", err);
-        setAllProducts(fallbackProducts);
+        setAllProducts([]);
       } finally {
         setLoading(false);
       }
@@ -141,7 +80,7 @@ const Browse = () => {
 
   // Compute final filtered list
   const filteredProducts = useMemo(() => {
-    let list = allProducts.length > 0 ? allProducts : fallbackProducts;
+    let list = [...allProducts];
 
     // Text search
     if (searchTerm.trim()) {
